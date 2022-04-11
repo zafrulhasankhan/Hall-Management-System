@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // google Login
 Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
@@ -58,9 +58,9 @@ Route::get('login/github/callback', [LoginController::class, 'handleGithubCallba
 //         return view('signup');
 //     })->name('sign-up');
 
-//     Route::get('/profile', function () {
-//         return view('profile');
-//     })->name('profile');
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile');
 
 //     Route::get('/hello', function () {
 //         return view('dashboard');
