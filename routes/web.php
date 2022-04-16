@@ -40,39 +40,19 @@ Route::get('login/github/callback', [LoginController::class, 'handleGithubCallba
 //         })->name('notification');
 //     });
 
-//     Route::post('/dashboard', [AdminController::class, 'security'])->name('securityCheck');
-//     Route::get('/admin', function () {
-//         return view('admin.security');
-//     })->name('AdminSecurity');
+//    
 
-
-//     Route::get('/', function () {
-//         return view('admin.dashboard');
-//     })->name('dashboard');
-
-//     Route::get('/sign-in', function () {
-//         return view('signin');
-//     })->name('sign-in');
-
-//     Route::get('/sign-up', function () {
-//         return view('signup');
-//     })->name('sign-up');
-
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
-
-//     Route::get('/hello', function () {
-//         return view('dashboard');
-//     })->name('hello');
-// });
-
-
+Route::group(['middleware' => 'auth'], function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
+    Route::get('create/instuition', [AdminController::class, 'CreateInstuition'])->name('admin.CreateInstuition');
+
+});
+
+
 
 });

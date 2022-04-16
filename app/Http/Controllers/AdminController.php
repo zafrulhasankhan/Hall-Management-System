@@ -22,4 +22,10 @@ class AdminController extends Controller
 
         return view('admin.notification');
     }
+
+    public function CreateInstuition(Request $request)
+    {
+
+        return view('admin.createInstuition');
+    }
 }
