@@ -39,18 +39,18 @@
                 <div style="text-align: center;font-size:20px;font-family: cursive" class="card-header">{{ __('Create Instuition') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('admin.CreateInstuition') }}">
                         @csrf
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Add Category') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control1 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus aria-label="Default select example">
-                                    <option selected>Select Category</option>
-                                    <option value="1">Hall</option>
-                                    <option value="2">Department</option>
-                                    <option value="3">Others</option>
+                                <select class="form-control1 @error('name') is-invalid @enderror" name="category" value="{{ old('name') }}" required autocomplete="name" autofocus aria-label="Default select example">
+                                    <option selected disabled>Select Category</option>
+                                    <option value="Hall">Hall</option>
+                                    <option value="Department">Department</option>
+                                    <option value="Others">Others</option>
                                 </select>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
