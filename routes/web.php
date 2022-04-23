@@ -61,6 +61,7 @@ Route::prefix('admin')->group(function () {
 
 });
 
+Route::post('/dashboard', [InstuitionController::class, 'register_verify'])->name('register_verify');
 
 
 });

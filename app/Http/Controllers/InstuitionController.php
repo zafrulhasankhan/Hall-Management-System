@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\complain_register;
 use App\Models\cr;
 use App\Models\Institution;
+use App\Models\User;
+use App\Notifications\register_verify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,15 +30,15 @@ class InstuitionController extends Controller
     public function create(Request $request)
     {
         Institution::create(
-            
+
             [
-             'category' => $request->category,
-             'name' => $request->name,
-             'description' => $request->description,
-             'admin_id' => Auth::user()->id,
-             'admin_mail' => Auth::user()->email,
+                'category' => $request->category,
+                'name' => $request->name,
+                'description' => $request->description,
+                'admin_id' => Auth::user()->id,
+                'admin_mail' => Auth::user()->email,
             ]
-            );
+        );
     }
 
     /**
@@ -44,9 +47,31 @@ class InstuitionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function register_verify(Request $request)
     {
-        //
+        $user = complain_register::create(
+
+            [
+                'user_mail' => Auth::user()->email,
+                'user_name' => Auth::user()->name,
+                'institute_name' => $request->institute_name,
+                'dept_name' => $request->dept_name,
+                'student_ID' => $request->student_ID,
+                'roomno' => $request->roomno,
+                'session' => $request->session,
+                'institute_id' => $request->institute_id,
+            ]
+        );
+         $data = Institution::where("name",$request->institute_name)->get();
+        // foreach ($admins as $admin) {
+        //     // dd($admin->id);
+        //     $admin->notify(new register_verify($user));
+        // }
+        $admin = User::find(1);
+        $admin->notify(new register_verify($user));
+        // return $user;
+        return $user;
+
     }
 
     /**
@@ -58,7 +83,7 @@ class InstuitionController extends Controller
     public function AddInstitution(Request $request)
     {
         $institute_details = Institution::all();
-        return view('UserPanel.AddInstitution',['institute_details'=>$institute_details]);
+        return view('UserPanel.AddInstitution', ['institute_details' => $institute_details]);
     }
 
     /**
@@ -67,7 +92,7 @@ class InstuitionController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function edit(cr $cr)
+    public function edit()
     {
         //
     }
@@ -79,7 +104,7 @@ class InstuitionController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cr $cr)
+    public function update(Request $request)
     {
         //
     }
@@ -90,7 +115,7 @@ class InstuitionController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cr $cr)
+    public function destroy()
     {
         //
     }
