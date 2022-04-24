@@ -29,6 +29,7 @@ class InstuitionController extends Controller
      */
     public function create(Request $request)
     {
+       
         Institution::create(
 
             [
@@ -48,30 +49,36 @@ class InstuitionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function register_verify(Request $request)
+
     {
-        $user = complain_register::create(
+        $check_info = complain_register::where('user_mail', Auth::user()->email)
+            ->where('institute_name', $request->institute_name)->get();
+         
 
-            [
-                'user_mail' => Auth::user()->email,
-                'user_name' => Auth::user()->name,
-                'institute_name' => $request->institute_name,
-                'dept_name' => $request->dept_name,
-                'student_ID' => $request->student_ID,
-                'roomno' => $request->roomno,
-                'session' => $request->session,
-                'institute_id' => $request->institute_id,
-            ]
-        );
-         $data = Institution::where("name",$request->institute_name)->get();
-        // foreach ($admins as $admin) {
-        //     // dd($admin->id);
-        //     $admin->notify(new register_verify($user));
-        // }
-        $admin = User::find(1);
-        $admin->notify(new register_verify($user));
-        // return $user;
-        return $user;
+        if ($check_info->isEmpty()){
+            $user = complain_register::create(
 
+                [
+                    'user_mail' => Auth::user()->email,
+                    'user_name' => Auth::user()->name,
+                    'institute_name' => $request->institute_name,
+                    'dept_name' => $request->dept_name,
+                    'student_ID' => $request->student_ID,
+                    'roomno' => $request->roomno,
+                    'session' => $request->session,
+                    'institute_id' => $request->institute_id,
+                ]
+            );
+            $datas = Institution::where("name", $request->institute_name)->get();
+            foreach ($datas as $data) {
+
+                $admin = User::find($data->admin_id);
+                $admin->notify(new register_verify($user));
+            }
+            return view('UserPanel.dashboard');
+        } else {
+            dd("ok already ase");
+        }
     }
 
     /**

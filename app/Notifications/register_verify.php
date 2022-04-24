@@ -59,6 +59,7 @@ class register_verify extends Notification
     {
         return [
             'username' =>$this->user->user_name,
+            'email' =>$this->user->user_mail,
         ];
     }
 }
