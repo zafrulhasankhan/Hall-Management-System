@@ -7,7 +7,7 @@
     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Notification</li>
   </ol>
-  <h6 class="font-weight-bolder mb-0">Notification</h6>
+  <h6 class="font-weight-bolder mb-0">Notification{{ Auth::user()->id }}</h6>
 </nav>
 @endsection
 @section('section')
@@ -19,11 +19,11 @@
           <h5 class="mb-0">Alerts</h5>
         </div>
         <div class="card-body p-3 pb-0">
-        @foreach($users as $user)
-          @foreach($user->unreadNotifications as $notification)
+        @foreach($admins as $admin)
+          @foreach($admin->unreadNotifications as $notification)
            @if(Auth::user()->id === $notification->notifiable_id)
             <div class="alert alert-primary alert-dismissible text-white" role="alert">
-              <span class="text-sm">{{ $notification->notifiable_id }}{{ Auth::user()->name }}A simple primary alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
+              <span class="text-sm">{{ $notification->notifiable_id }}{{ Auth::user()->name }}{{ $notification->data['username'] }}A simple primary alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
               <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times; </span>
               </button>
@@ -33,7 +33,7 @@
           @endforeach
           @endforeach
           <div class="alert alert-secondary alert-dismissible text-white" role="alert">
-            <span class="text-sm">{{Auth::user()->admin_name}}A simple secondary alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
+            <span class="text-sm">A simple secondary alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
             <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

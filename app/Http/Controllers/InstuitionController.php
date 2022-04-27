@@ -17,6 +17,12 @@ class InstuitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
         return view('admin.createInstuition');
@@ -29,9 +35,9 @@ class InstuitionController extends Controller
      */
     public function create(Request $request)
     {
-       
+    
         Institution::create(
-
+   
             [
                 'category' => $request->category,
                 'name' => $request->name,
@@ -48,38 +54,7 @@ class InstuitionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register_verify(Request $request)
-
-    {
-        $check_info = complain_register::where('user_mail', Auth::user()->email)
-            ->where('institute_name', $request->institute_name)->get();
-         
-
-        if ($check_info->isEmpty()){
-            $user = complain_register::create(
-
-                [
-                    'user_mail' => Auth::user()->email,
-                    'user_name' => Auth::user()->name,
-                    'institute_name' => $request->institute_name,
-                    'dept_name' => $request->dept_name,
-                    'student_ID' => $request->student_ID,
-                    'roomno' => $request->roomno,
-                    'session' => $request->session,
-                    'institute_id' => $request->institute_id,
-                ]
-            );
-            $datas = Institution::where("name", $request->institute_name)->get();
-            foreach ($datas as $data) {
-
-                $admin = User::find($data->admin_id);
-                $admin->notify(new register_verify($user));
-            }
-            return view('UserPanel.dashboard');
-        } else {
-            dd("ok already ase");
-        }
-    }
+   
 
     /**
      * Display the specified resource.

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddInstitutionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
@@ -55,12 +56,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
     //instuition route
-    Route::get('create/instuition', [AdminController::class, 'index1'])->name('admin.InstuitionForm');
+    Route::get('create/instuition', [InstuitionController::class, 'index'])->name('admin.InstuitionForm');
     Route::post('instuitions', [InstuitionController::class, 'create'])->name('admin.CreateInstuition');
 
 });
-Route::post('user/dashboard', [InstuitionController::class, 'register_verify'])->name('register_verify');
-Route::post('user/dashboard', [InstuitionController::class, 'register_verify'])->name('register_verify');
+Route::post('user/dashboard', [AddInstitutionController::class, 'register_verify'])->name('register_verify');
+
 
 
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +20,14 @@ class AdminController extends Controller
     }
     public function index1()
     {
+        dd(Auth::user()->name );
         return view('admin.createInstuition');
     }
 
     public function notification(Request $request)
     {
-        $users = User::all();
-        return view('admin.notification',['users'=>$users]);
+        $admins = Admin::all();
+        return view('admin.notification',['admins'=>$admins]);
     }
 
    
