@@ -9,6 +9,6 @@ class complain_register extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "user_name","user_mail",'institute_name', 'dept_name', 'student_ID','roomno',"session","institute_id"
+        "user_name","user_mail",'hall_name', 'dept_name', 'student_ID','roomno',"session"
     ];
 }

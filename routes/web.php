@@ -47,7 +47,9 @@ Route::get('login/github/callback', [LoginController::class, 'handleGithubCallba
 Route::group(['middleware' => 'auth'], function () {
 
     //institution route
-    Route::get('add-instuitions', [InstuitionController::class, 'AddInstitution'])->name('AddInstuition');
+    Route::get('add-instuitions', [AddInstitutionController::class, 'AddInstitution'])->name('AddInstuition');
+    Route::post('user/dashboard', [AddInstitutionController::class, 'register_verify'])->name('register_verify');
+});
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -55,13 +57,9 @@ Route::prefix('admin')->group(function () {
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
+    Route::get('notification/{id}', [AdminController::class, 'register_notification_details'])->name('register_notification_details');
     //instuition route
     Route::get('create/instuition', [InstuitionController::class, 'index'])->name('admin.InstuitionForm');
     Route::post('instuitions', [InstuitionController::class, 'create'])->name('admin.CreateInstuition');
-
-});
-Route::post('user/dashboard', [AddInstitutionController::class, 'register_verify'])->name('register_verify');
-
-
 
 });

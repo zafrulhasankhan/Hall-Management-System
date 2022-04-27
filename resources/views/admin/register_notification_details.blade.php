@@ -39,6 +39,7 @@
                 <div style="text-align: center;font-size:20px;font-family: cursive" class="card-header">{{ __('Create Instuition') }}</div>
 
                 <div class="card-body">
+                @foreach ($notifyData as $data)
                     <form method="POST" action="{{ route('admin.CreateInstuition') }}">
                         @csrf
 
@@ -61,11 +62,12 @@
                         </div> -->
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Hall Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('UserName') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control1 @error('name') is-invalid @enderror" name="hall_name" value="{{ old('name') }}" required autocomplete="name">
-
+                                
+                                <input id="name" type="text" value="{{ $data->data }}" class="form-control1 @error('name') is-invalid @enderror" name="hall_name" value="{{ old('name') }}" required autocomplete="name">
+                                 
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -111,6 +113,7 @@
                             </div>
                         </div>
                     </form>
+                @endforeach
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class AddInstitutionController extends Controller
 
     {
         $check_info = complain_register::where('user_mail', Auth::user()->email)
-            ->where('institute_name', $request->institute_name)->get();
+            ->where('hall_name', $request->institute_name)->get();
          
 
         if ($check_info->isEmpty()){
@@ -24,15 +24,15 @@ class AddInstitutionController extends Controller
                 [
                     'user_mail' => Auth::user()->email,
                     'user_name' => Auth::user()->name,
-                    'institute_name' => $request->institute_name,
+                    'hall_name' => $request->hall_name,
                     'dept_name' => $request->dept_name,
                     'student_ID' => $request->student_ID,
                     'roomno' => $request->roomno,
                     'session' => $request->session,
-                    'institute_id' => $request->institute_id,
+                    
                 ]
             );
-            $datas = institution::where("name", $request->institute_name)->get();
+            $datas = institution::where("hall_name", $request->hall_name)->get();
             foreach ($datas as $data) {
 
                 $admin = Admin::find($data->admin_id);
@@ -42,5 +42,11 @@ class AddInstitutionController extends Controller
         } else {
             dd("ok already ase");
         }
+    }
+
+    public function AddInstitution(Request $request)
+    {
+        $institute_details = Institution::all();
+        return view('UserPanel.AddInstitution', ['institute_details' => $institute_details]);
     }
 }

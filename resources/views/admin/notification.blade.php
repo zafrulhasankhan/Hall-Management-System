@@ -22,8 +22,11 @@
         @foreach($admins as $admin)
           @foreach($admin->unreadNotifications as $notification)
            @if(Auth::user()->id === $notification->notifiable_id)
-            <div class="alert alert-primary alert-dismissible text-white" role="alert">
-              <span class="text-sm">{{ $notification->notifiable_id }}{{ Auth::user()->name }}{{ $notification->data['username'] }}A simple primary alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
+            <div class="alert alert-secondary alert-dismissible text-white" role="alert">
+              <span class="text-sm"><a href="{{ route('register_notification_details',$notification->id)}}" class="alert-link text-white">'{{ $notification->data['username'] }}' Requested to join '{{ $notification->data['institute_name'] }}' group.</a>&ensp;
+            <button type="submit" class="btn-sm btn-primary">Approve</button>
+            <button type="submit" class="btn-sm btn-warning">Decline</button>
+            </span>
               <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times; </span>
               </button>

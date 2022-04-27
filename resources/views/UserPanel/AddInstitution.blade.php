@@ -11,23 +11,23 @@
                     <form method="POST" action="{{ route('register_verify') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Institution Name') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Hall Name') }}</label>
                             <div class="col-md-6">
-                                <select name="institute_name" id="parent_id" class="form-control dynamic" data-dependent="details" required>
+                                <select name="hall_name" id="parent_id1" class="form-control dynamic" data-dependent="details" required>
                                     <option value="" selected disabled> Select Name</option>
                                     @foreach ( $institute_details as $row )
-                                    <option class="{{ $row->category }}" value="{{ $row->name }}">{{ $row->name }} - {{ $row->category }}</option>
+                                    <option class="{{ $row->category }}" value="{{ $row->hall_name }}">{{ $row->hall_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-                        <div class="some" id="some_Hall" style="display:none;">
+                        <div class="some" id="some_Hall" >
                             <div class="row mb-3">
                                 <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Department Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="dept_name" type="text" class="form-control @error('dept_name') is-invalid @enderror" name="dept_name" value="{{ old('email') }}"  autocomplete="email">
+                                    <input required id="dept_name" type="text" class="form-control @error('dept_name') is-invalid @enderror" name="dept_name" value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('dept_name')
                                     <span class="invalid-feedback" role="alert">
@@ -40,9 +40,22 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Student ID') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="ID" type="text" class="form-control @error('ID') is-invalid @enderror" name="student_ID" value="{{ old('email') }}"  autocomplete="email">
+                                    <input required id="ID" type="text" class="form-control @error('ID') is-invalid @enderror" name="student_ID" value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('ID')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Session') }}</label>
+
+                                <div class="col-md-6">
+                                    <input required id="session" type="text" class="form-control @error('session') is-invalid @enderror" name="session" value="{{ old('email') }}"  autocomplete="email">
+
+                                    @error('session')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -53,7 +66,7 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Room No.') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="roomno" type="text" class="form-control @error('roomno') is-invalid @enderror" name="roomno" value="{{ old('email') }}"  autocomplete="email">
+                                    <input required id="roomno" type="text" class="form-control @error('roomno') is-invalid @enderror" name="roomno" value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('roomno')
                                     <span class="invalid-feedback" role="alert">
@@ -64,12 +77,12 @@
                             </div>
                         </div>
 
-                        <div class="some" id="some_Department" style="display:none;">
+                        <!-- <div class="some" id="some_Department" style="display:none;">
                             <div class="row mb-3">
                                 <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Student ID') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="ID" type="text" class="form-control @error('ID') is-invalid @enderror" name="ID" value="{{ old('email') }}"  autocomplete="email">
+                                    <input required id="ID" type="text" class="form-control @error('ID') is-invalid @enderror" name="ID" value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('ID')
                                     <span class="invalid-feedback" role="alert">
@@ -108,7 +121,7 @@
                                 </div>
                             </div>
                             
-                        </div>
+                        </div> -->
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

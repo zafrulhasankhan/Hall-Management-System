@@ -35,12 +35,14 @@ class InstuitionController extends Controller
      */
     public function create(Request $request)
     {
-    
+        $hall = $request->hall_name;
+        $varsity = $request->varsity_name;
+        $hall_varsity = $hall.",".$varsity;
         Institution::create(
    
             [
-                'category' => $request->category,
-                'name' => $request->name,
+
+                'hall_name' => $hall_varsity,
                 'description' => $request->description,
                 'admin_id' => Auth::user()->id,
                 'admin_mail' => Auth::user()->email,
@@ -62,11 +64,7 @@ class InstuitionController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function AddInstitution(Request $request)
-    {
-        $institute_details = Institution::all();
-        return view('UserPanel.AddInstitution', ['institute_details' => $institute_details]);
-    }
+    
 
     /**
      * Show the form for editing the specified resource.

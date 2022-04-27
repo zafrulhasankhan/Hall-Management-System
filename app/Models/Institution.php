@@ -9,6 +9,6 @@ class institution extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'category', 'name', 'description','admin_id',"admin_mail"
+        'varsity_name', 'hall_name', 'description','admin_id',"admin_mail"
     ];
 }
