@@ -19,20 +19,41 @@
           <h5 class="mb-0">Alerts</h5>
         </div>
         <div class="card-body p-3 pb-0">
-        @foreach($admins as $admin)
+          @foreach($admins as $admin)
           @foreach($admin->unreadNotifications as $notification)
-           @if(Auth::user()->id === $notification->notifiable_id)
-            <div class="alert alert-secondary alert-dismissible text-white" role="alert">
-              <span class="text-sm"><a href="{{ route('register_notification_details',$notification->id)}}" class="alert-link text-white">'{{ $notification->data['username'] }}' Requested to join '{{ $notification->data['institute_name'] }}' group.</a>&ensp;
-            <button type="submit" class="btn-sm btn-primary">Approve</button>
-            <button type="submit" class="btn-sm btn-warning">Decline</button>
+          @if(Auth::user()->id === $notification->notifiable_id)
+          <div class="alert alert-secondary alert-dismissible text-white" role="alert">
+            <span class="text-sm"><a href="#" id="{{ $notification->data['id'] }}" class="alert-link text-white notify_details">'{{ $notification->data['username'] }}' Requested to join '{{ $notification->data['institute_name'] }}' group.</a>&ensp;
+              <button type="submit" class="btn-sm btn-primary">Approve</button>
+              <button type="submit" class="btn-sm btn-warning">Decline</button>
+              <h5 style="display: none;">hello</h5>
             </span>
-              <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times; </span>
-              </button>
-            </div>
-           
-            @endif
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times; </span>
+            </button>
+          </div>
+
+          <div class="card-body pt-4 p-3 notify_details_block" id="details_{{ $notification->data['id'] }}" style="display: none;">
+              <ul class="list-group">
+                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-3 text-sm">{{ $notification->data['username'] }}</h6>
+                    <span class="mb-1 text-xs">Email: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['email'] }}</span></span>
+                    <span class="mb-1 text-xs">Department Name: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['dept_name'] }}</span></span>
+                    <span class="mb-1 text-xs">Student ID: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['student_ID'] }}</span></span>
+                    <span class="mb-1 text-xs">Session: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['session'] }}</span></span>
+                    <span class="mb-1 text-xs">Room No.: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['roomno'] }}</span></span>
+                  </div>
+                  <div class="ms-auto text-end">
+                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ route('register_notification_approve',$notification->data['id']) }}"><i class="material-icons text-sm me-2">Approve</i>Approve</a>
+                    <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('register_notification_decline',$notification->data['id']) }}"><i class="material-icons text-sm me-2">Delete</i>Delete</a>
+                  </div>
+                </li>
+              </ul>
+          </div>
+
+
+          @endif
           @endforeach
           @endforeach
           <div class="alert alert-secondary alert-dismissible text-white" role="alert">
@@ -198,3 +219,14 @@
   </footer>
 </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $(document).ready(function(e) {
+    $('.notify_details').click(function() {
+      var some = $(this).attr("id");
+      console.log(some);
+      $("#details_"+some).toggle();
+    });
+  })
+</script>

@@ -32,6 +32,7 @@ class AddInstitutionController extends Controller
                     
                 ]
             );
+            
             $datas = institution::where("hall_name", $request->hall_name)->get();
             foreach ($datas as $data) {
 

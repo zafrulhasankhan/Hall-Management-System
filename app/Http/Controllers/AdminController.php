@@ -28,10 +28,17 @@ class AdminController extends Controller
         return view('admin.notification',['admins'=>$admins]);
     }
 
-    public function register_notification_details($id)
+    public function register_notification_approve($id)
     {
-        $notify_data = FacadesDB::select('select * from notifications where id=?',[$id]);
-         dd(($notify_data[0]));
+        $notify_data = FacadesDB::update('UPDATE `complain_registers` SET approval =? where id=?',["yes",$id]);
+         dd($id);
+        return view('admin.register_notification_details',['notifyData'=>$notify_data]);
+    }
+
+    public function register_notification_decline($id)
+    {
+        $notify_data = FacadesDB::delete('delete from `complain_registers` where id=?',[$id]);
+         dd($id);
         return view('admin.register_notification_details',['notifyData'=>$notify_data]);
     }
 

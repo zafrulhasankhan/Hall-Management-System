@@ -58,13 +58,14 @@ class register_verify extends Notification
     public function toArray($notifiable)
     {
         return [
-            'username' =>$this->user->user_name,
-            'email' =>$this->user->user_mail,
-            'institute_name' =>$this->user->hall_name,
-            'dept_name' =>$this->user->dept_name,
-            'student_ID' =>$this->user->student_ID,
-            'session' =>$this->user->session,
-            'roomno' =>$this->user->roomno,
+            'id' => $this->user->id,
+            'username' => $this->user->user_name,
+            'email' => $this->user->user_mail,
+            'institute_name' => $this->user->hall_name,
+            'dept_name' => $this->user->dept_name,
+            'student_ID' => $this->user->student_ID,
+            'session' => $this->user->session,
+            'roomno' => $this->user->roomno,
 
         ];
     }

@@ -57,7 +57,8 @@ Route::prefix('admin')->group(function () {
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
-    Route::get('notification/{id}', [AdminController::class, 'register_notification_details'])->name('register_notification_details');
+    Route::get('notification/{id}', [AdminController::class, 'register_notification_approve'])->name('register_notification_approve');
+    Route::get('notification/decline/{id}', [AdminController::class, 'register_notification_decline'])->name('register_notification_decline');
     //instuition route
     Route::get('create/instuition', [InstuitionController::class, 'index'])->name('admin.InstuitionForm');
     Route::post('instuitions', [InstuitionController::class, 'create'])->name('admin.CreateInstuition');
