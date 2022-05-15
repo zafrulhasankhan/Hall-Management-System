@@ -59,9 +59,10 @@ class register_verify extends Notification
     {
         return [
             'id' => $this->user->id,
-            'username' => $this->user->user_name,
+            'user_name' => $this->user->user_name,
+            'complain' => "",
             'email' => $this->user->user_mail,
-            'institute_name' => $this->user->hall_name,
+            'hall_name' => $this->user->hall_name,
             'dept_name' => $this->user->dept_name,
             'student_ID' => $this->user->student_ID,
             'session' => $this->user->session,

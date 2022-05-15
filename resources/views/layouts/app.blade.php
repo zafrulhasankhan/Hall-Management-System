@@ -44,7 +44,7 @@
                             <a class="nav-link" href="{{ route('AddInstuition') }}">{{ __('Add instuition') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Complain') }}</a>
+                            <a class="nav-link" href="{{ route('complain_form') }}">{{ __('Complain') }}</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest

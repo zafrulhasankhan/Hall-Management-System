@@ -72,10 +72,7 @@ class InstuitionController extends Controller
      * @param  \App\Models\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function edit()
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.

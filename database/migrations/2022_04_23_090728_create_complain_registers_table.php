@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('complain_registers', function (Blueprint $table) {
             $table->id();
-            $table->string('institute_name');
+            $table->string('user_name');
+            $table->string('user_mail');
+            $table->string('approval');
+            $table->string('hall_name');
             $table->string('dept_name')->nullable();
             $table->string('student_ID')->nullable(); 
             $table->string('roomno')->nullable(); 
             $table->string('session')->nullable();
-            $table->string('institute_id')->nullable();
             $table->timestamps();
         });
     }

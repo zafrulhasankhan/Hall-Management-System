@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\institution;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Route;
 use Session;
 class AdminLoginController extends Controller
@@ -29,7 +31,7 @@ class AdminLoginController extends Controller
       // Attempt to log the user in
       if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
-        return redirect()->intended(route('admin.dashboard'));
+        return redirect()->intended(route('admin.select_hall'));
       } 
       // if unsuccessful, then redirect back to the login with the form data
       return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'This Credentials does not match our records');

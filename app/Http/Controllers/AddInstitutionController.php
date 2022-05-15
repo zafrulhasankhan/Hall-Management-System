@@ -7,6 +7,7 @@ use App\Models\complain_register;
 use App\Models\institution;
 use App\Notifications\register_verify;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 
 class AddInstitutionController extends Controller
@@ -49,5 +50,15 @@ class AddInstitutionController extends Controller
     {
         $institute_details = Institution::all();
         return view('UserPanel.AddInstitution', ['institute_details' => $institute_details]);
+    }
+
+    public function select_hall(Request $request)
+    {
+        // dd(Auth::user()->id);
+         $user_notify = DatabaseNotification::where('data->hall_name',$request->hall_name)->where('notifiable_id',Auth::user()->id)->where('notifiable_type',"App\Models\User")->get();
+        //   dd($user_notify);
+        return view('home',['userNotify'=>$user_notify]);
+        //  $user = Auth::user()->unreadNotifications->where('data->hall_name',$request->hall_name)->limit(3)->get();
+        //  dd($user);
     }
 }

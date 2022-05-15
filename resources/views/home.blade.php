@@ -13,12 +13,22 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    @foreach($users as $user)
-                        @foreach($user->notifications as $notification)
-                            @if(Auth::user()->id === $notification->data['id'])
-                            <h1>{{$notification->data['msg']}}</h1><br>
-                            @endif
-                        @endforeach
+
+
+                    @foreach($userNotify as $notification)
+                    <!-- @if(Auth::user()->id === $notification->data['id']) -->
+                    <h4>{{$notification->data['msg']}} </h4><br>
+
+                    <!-- @endif -->
+
+                    @if($notification->data['complain'])
+                    <ul>
+                        <li>
+                            Comlain: {{ $notification->data['complain'] }} <br>
+                            reply : {{ $notification->data['complain_reply'] }}
+                        </li>
+                    </ul>
+                    @endif
                     @endforeach
 
 

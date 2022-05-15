@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\complain;
 use App\Models\complain_register;
+use App\Models\institution;
 use App\Models\User;
+use App\Notifications\complain_reply_notify;
 use App\Notifications\register_feddback_notify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +22,21 @@ class AdminController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->hall_name);
         return view('admin.dashboard');
+        
+    }
+
+    public function select_hall()
+    {
+        $halls = institution::where('admin_mail',Auth::user()->email)->get();
+        if($halls->isEmpty()){
+            return view('admin.dashboard');
+        }
+        return view('admin.select_hall',['halls'=> $halls]);
+        
     }
 
     public function notification(Request $request)
@@ -45,5 +60,19 @@ class AdminController extends Controller
         $notify_data = FacadesDB::delete('delete from `complain_registers` where id=?', [$id]);
         dd($id);
         return view('admin.register_notification_details', ['notifyData' => $notify_data]);
+    }
+
+    public function complain_reply(Request $request)
+    {
+        // dd($request->complain_reply);
+        $reply_info = [
+            'hall_name'=>$request->hall_name,
+            'user_id'=>$request->id,
+            'complain_reply'=>$request->complain_reply,
+            'complain'=>$request->complain,
+        ];
+        $user = User::find($request->id);
+        $user->notify(new complain_reply_notify($request->id,$request->hall_name,$request->complain,$request->complain_reply));
+        
     }
 }

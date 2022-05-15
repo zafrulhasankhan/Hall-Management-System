@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\complain_register;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,7 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('home',['users'=> $users]);
+        // $users = User::all();
+        $halls = complain_register::where('user_mail',Auth::user()->email)
+                 ->where('approval','yes')
+                 ->get();
+        return view('UserPanel.select_hall',['halls'=> $halls]);
     }
 }

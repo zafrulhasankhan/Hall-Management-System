@@ -4,6 +4,7 @@ use App\Http\Controllers\AddInstitutionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\InstuitionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -49,18 +50,24 @@ Route::group(['middleware' => 'auth'], function () {
     //institution route
     Route::get('add-instuitions', [AddInstitutionController::class, 'AddInstitution'])->name('AddInstuition');
     Route::post('user/dashboard', [AddInstitutionController::class, 'register_verify'])->name('register_verify');
+    Route::get('/complain', [ComplainController::class, 'index'])->name('complain_form');
+    Route::post('/complain/create', [ComplainController::class, 'create'])->name('complain_create');
+    Route::post('/select-hall', [AddInstitutionController::class, 'select_hall'])->name('select_hall');
+
 });
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
-    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [AdminController::class, 'select_hall'])->name('admin.select_hall');
+    Route::post('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
     Route::get('notification/{id}', [AdminController::class, 'register_notification_approve'])->name('register_notification_approve');
     Route::get('notification/decline/{id}', [AdminController::class, 'register_notification_decline'])->name('register_notification_decline');
     //instuition route
     Route::get('create/instuition', [InstuitionController::class, 'index'])->name('admin.InstuitionForm');
     Route::post('instuitions', [InstuitionController::class, 'create'])->name('admin.CreateInstuition');
+    Route::post('complain/reply', [AdminController::class, 'complain_reply'])->name('admin.complain_reply');
 
 });

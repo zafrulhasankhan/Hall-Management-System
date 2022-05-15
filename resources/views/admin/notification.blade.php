@@ -22,8 +22,9 @@
           @foreach($admins as $admin)
           @foreach($admin->unreadNotifications as $notification)
           @if(Auth::user()->id === $notification->notifiable_id)
+          @if(!$notification->data['complain'])
           <div class="alert alert-secondary alert-dismissible text-white" role="alert">
-            <span class="text-sm"><a href="#" id="{{ $notification->data['id'] }}" class="alert-link text-white notify_details">'{{ $notification->data['username'] }}' Requested to join '{{ $notification->data['institute_name'] }}' group.</a>&ensp;
+            <span class="text-sm"><a href="#" id="{{ $notification->data['id'] }}" class="alert-link text-white notify_details">@'{{ $notification->data['user_name'] }}' Requested to join '{{ $notification->data['hall_name'] }}' group.</a>&ensp;
               <button type="submit" class="btn-sm btn-primary">Approve</button>
               <button type="submit" class="btn-sm btn-warning">Decline</button>
               <h5 style="display: none;">hello</h5>
@@ -32,72 +33,85 @@
               <span aria-hidden="true">&times; </span>
             </button>
           </div>
+          @else
 
-          <div class="card-body pt-4 p-3 notify_details_block" id="details_{{ $notification->data['id'] }}" style="display: none;">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">{{ $notification->data['username'] }}</h6>
-                    <span class="mb-1 text-xs">Email: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['email'] }}</span></span>
-                    <span class="mb-1 text-xs">Department Name: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['dept_name'] }}</span></span>
-                    <span class="mb-1 text-xs">Student ID: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['student_ID'] }}</span></span>
-                    <span class="mb-1 text-xs">Session: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['session'] }}</span></span>
-                    <span class="mb-1 text-xs">Room No.: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['roomno'] }}</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ route('register_notification_approve',$notification->data['id']) }}"><i class="material-icons text-sm me-2">Approve</i>Approve</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('register_notification_decline',$notification->data['id']) }}"><i class="material-icons text-sm me-2">Delete</i>Delete</a>
-                  </div>
-                </li>
-              </ul>
+          <div class="alert alert-danger alert-dismissible text-white" role="alert">
+            <span class="text-sm"><a href="#" id="{{ $notification->data['id'] }}" class="alert-link text-white notify_details">Recieved a complain from '{{ $notification->data['user_name'] }}' in '{{ $notification->data['hall_name'] }}' group.</a>&ensp;
+            </span>
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times; </span>
+            </button>
           </div>
+          @endif
+          <div class="card-body pt-4 p-3 notify_details_block" id="details_{{ $notification->data['id'] }}" style="display: none;">
+            @if(!$notification->data['complain'] )
+            <ul class="list-group">
+              <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                <div class="d-flex flex-column">
+                  <h6 class="mb-3 text-sm">{{ $notification->data['user_name'] }}</h6>
+                  <span class="mb-1 text-xs">Email: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['email'] ? $notification->data['email']:'' }}</span></span>
+                  <span class="mb-1 text-xs">Department Name: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['dept_name'] }}</span></span>
+                  <span class="mb-1 text-xs">Student ID: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['student_ID'] }}</span></span>
+                  <span class="mb-1 text-xs">Session: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['session'] }}</span></span>
+                  <span class="mb-1 text-xs">Room No.: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['roomno'] }}</span></span>
+                </div>
+                <div class="ms-auto text-end">
+                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ route('register_notification_approve',$notification->data['id']) }}"><i class="material-icons text-sm me-2">Approve</i>Approve</a>
+                  <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('register_notification_decline',$notification->data['id']) }}"><i class="material-icons text-sm me-2">Delete</i>Delete</a>
+                </div>
+              </li>
+            </ul>
+            @else
+            <ul class="list-group">
+              <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                <div class="d-flex flex-column">
+                  <h6 class="mb-3 text-sm">{{ $notification->data['user_name'] }}</h6>
+                  <span class="mb-1 text-xs">Hall Name: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['hall_name'] }}</span></span>
+                  <span class="mb-1 text-xs">Department Name: <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['dept_name'] }}</span></span>
+                  <span class="mb-1 text-xs">Student ID: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['student_ID'] }}</span></span>
+                  <span class="mb-1 text-xs">Session: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['session'] }}</span></span>
+                  <span class="mb-1 text-xs">Room No.: <span class="text-dark ms-sm-2 font-weight-bold">{{ $notification->data['roomno'] }}</span></span>
+                  <span class="mb-1 text-xs"> <span style="font-size:15px;font-weight:bold">Complain:</h4> <span class="text-dark font-weight-bold ms-sm-2">{{ $notification->data['complain']  }}</span></span>
+                    <div class="ms-auto text-end">
+                      <form method="POST" action="{{ route('admin.complain_reply') }}">
+                        @csrf
+                        <div class="row mb-3">
+                          <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Reply') }}</label>
+
+                          <div class="col-md-6">
+                            <textarea type="text" class="form-control1 @error('name') is-invalid @enderror" name="complain_reply" value="{{ old('name') }}" required ></textarea>
+
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                          </div>
+                        </div>
+                        <input type="text" hidden name="id" value="{{ $notification->data['id'] }}">
+                        <input type="text" hidden name="complain" value="{{ $notification->data['complain'] }}">
+                        <input type="text" hidden name="hall_name" value="{{ $notification->data['hall_name'] }}">
+                        
+                        <div class="row mb-0">
+                          <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                              {{ __('send') }}
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+              </li>
+            </ul>
+            @endif
+          </div>
+
 
 
           @endif
           @endforeach
           @endforeach
-          <div class="alert alert-secondary alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple secondary alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-success alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple success alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-danger alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple danger alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-warning alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple warning alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-info alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple info alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-light alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple light alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-dark alert-dismissible text-white" role="alert">
-            <span class="text-sm">A simple dark alert with <a href="javascript:;" class="alert-link text-white">an example link</a>. Give it a click if you like.</span>
-            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+
         </div>
       </div>
       <div class="card mt-4">
@@ -226,7 +240,7 @@
     $('.notify_details').click(function() {
       var some = $(this).attr("id");
       console.log(some);
-      $("#details_"+some).toggle();
+      $("#details_" + some).toggle();
     });
   })
 </script>
