@@ -56,8 +56,9 @@ class AddInstitutionController extends Controller
     {
         // dd(Auth::user()->id);
          $user_notify = DatabaseNotification::where('data->hall_name',$request->hall_name)->where('notifiable_id',Auth::user()->id)->where('notifiable_type',"App\Models\User")->get();
+         $user_notify_notice = DatabaseNotification::where('data->hall_name',$request->hall_name)->where('data->id',Auth::user()->id)->where('notifiable_type',"App\Models\complain_register")->get();
         //   dd($user_notify);
-        return view('home',['userNotify'=>$user_notify]);
+        return view('home',['userNotify'=>$user_notify,'userNotice'=>$user_notify_notice]);
         //  $user = Auth::user()->unreadNotifications->where('data->hall_name',$request->hall_name)->limit(3)->get();
         //  dd($user);
     }

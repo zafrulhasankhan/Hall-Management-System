@@ -25,7 +25,8 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         // dd($request->hall_name);
-        return view('admin.dashboard');
+        $update_hall = FacadesDB::update('update admins set `active_hallName` = ? where email =?', [$request->hall_name,Auth::user()->email]);
+        return view('admin.dashboard',['hall_name'=>$request->hall_name]);
         
     }
 

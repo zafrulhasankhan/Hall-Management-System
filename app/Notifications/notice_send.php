@@ -2,29 +2,31 @@
 
 namespace App\Notifications;
 
-use App\Models\complain_register;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class register_feddback_notify extends Notification
+class notice_send extends Notification
 {
     use Queueable;
-    private $user = "";
-    private $data = "";
+    
+    private $notice_info = "";
+    private $user_info = "";
+    private $user_id = "";
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user, complain_register $data)
+    public function __construct( $notice_info,$user_info,$user_id)
     {
-     
-        $this->user = $user;
-        $this->data = $data;
+        //  dd($hall_name);
+        $this->notice_info = $notice_info;
+        $this->user_info = $user_info;
+        $this->user_id = $user_id;
+        
     }
 
     /**
@@ -61,12 +63,11 @@ class register_feddback_notify extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->user->id,
-            'hall_name'=>$this->data->hall_name,
-            'msg' => "Hey " . $this->user->name.", Your register application has been approved by " .$this->data->hall_name. " admin",
+            'id' => $this->user_id,
+            'hall_name' => $this->notice_info->hall_name,
             'complain' => "",
-            'complain_reply' => ""
-
-        ];
+            'complain_reply' => "",
+            'msg'=>$this->notice_info->notice_details
+         ];
     }
 }

@@ -14,6 +14,11 @@
                     </div>
                     @endif
 
+                    <!-- Notice  -->
+                    @foreach($userNotice as $notification)
+                        <h4><span>Notice : </span>{{ $notification->data['msg'] }}</h4>
+                    @endforeach
+
 
                     @foreach($userNotify as $notification)
                     <!-- @if(Auth::user()->id === $notification->data['id']) -->
