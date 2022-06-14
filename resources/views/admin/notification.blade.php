@@ -10,6 +10,7 @@
   <h6 class="font-weight-bolder mb-0">Notification{{ Auth::user()->id }}</h6>
 </nav>
 @endsection
+
 @section('section')
 <div class="container-fluid py-4">
   <div class="row">

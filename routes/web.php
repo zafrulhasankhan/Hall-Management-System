@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\InstuitionController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\TokenController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -74,4 +76,24 @@ Route::prefix('admin')->group(function () {
     Route::post('instuitions', [InstuitionController::class, 'create'])->name('admin.CreateInstuition');
     Route::post('complain/reply', [AdminController::class, 'complain_reply'])->name('admin.complain_reply');
 
+
+    //token route start
+    Route::get('create/token', [TokenController::class, 'index'])->name('admin.TokenForm');
+    Route::post('create/token', [TokenController::class, 'create'])->name('admin.Tokencreate');
+
+
 });
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
