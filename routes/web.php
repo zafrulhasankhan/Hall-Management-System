@@ -9,6 +9,7 @@ use App\Http\Controllers\InstuitionController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\User_token_controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -55,7 +56,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('user/dashboard', [AddInstitutionController::class, 'register_verify'])->name('register_verify');
     Route::get('/complain', [ComplainController::class, 'index'])->name('complain_form');
     Route::post('/complain/create', [ComplainController::class, 'create'])->name('complain_create');
-    Route::post('/select-hall', [AddInstitutionController::class, 'select_hall'])->name('select_hall');
+    Route::get('/home', [AddInstitutionController::class, 'home'])->name('home');
+    Route::get("meal-coupon", [User_token_controller::class, 'index'])->name('coupon_form');
 
 });
 

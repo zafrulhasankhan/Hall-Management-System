@@ -39,11 +39,11 @@
             <div class="card">
                 <div style="text-align: center;font-size:20px;font-family: cursive" class="card-header">{{ __('Token Configuration') }}</div>
 
-                <div class="card-body">
+                <div class="card-body " >
                     <form method="POST" action="{{ route('admin.Tokencreate') }}">
                         @csrf
 
-
+                        <!-- 
                         <div class="row mb-3 ml-5">
                             <div class="col-md-6">
                                 <div class="form-check">
@@ -66,34 +66,71 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> -->
 
-                        <div class="row mb-3 " id="details_breakfast" style="display: none;">
-                            <div class="mb-3 ml-6 col-md-5">
-                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="breakfast_price" value="{{ old('varsity_name') }}"  autocomplete="name">
-                                <div id="emailHelp" class="form-text">Destine the token prices of the breakfast.</div>
+                        <div class="row mb-3 ml-3 " id="details_breakfast">
+                            <div class="form-check  col-md-5">
+                                <input class="form-check-input notify_details" type="checkbox" value="1" name="breakfast_check">
+                                <label for="name" class="form-check-label" for="flexCheckChecked">{{ __("Price of breakfast's token") }}</label>
+                            </div>
+
+                            <div class="mb-3  col-md-5">
+                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="breakfast_price" value="30" autocomplete="name">
+                                <div id="emailHelp" class="form-text">Click the above field for edit token prices of the breakfast.</div>
                             </div>
                         </div>
-                        <div class="row mb-3" id="details_lunch" style="display: none;">
-                            <!-- <label for="varsity_name" class="col-md-4 col-form-label text-md-end">{{ __('University Name') }}</label> -->
+                        <div class="row mb-3 ml-3 " id="details_breakfast">
+                            <div class="form-check  col-md-5">
+                                <input class="form-check-input notify_details" type="checkbox" value="2" checked name="lunch_check">
+                                <label for="name" class="form-check-label" for="flexCheckChecked">{{ __("Price of lunch's token") }}</label>
+                            </div>
+
+                            <div class="mb-3  col-md-5">
+                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="lunch_price" value="30" autocomplete="name">
+                                <div id="emailHelp" class="form-text">Click the above field for edit token prices of the Lunch.</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ml-3 " id="details_breakfast">
+                            <div class="form-check  col-md-5">
+                                <input class="form-check-input notify_details" type="checkbox" value="3" checked name="dinner_check">
+                                <label for="name" class="form-check-label" for="flexCheckChecked">{{ __("Price of dinner's token") }}</label>
+                            </div>
+
+                            <div class="mb-3  col-md-5">
+                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="dinner_price" value="30" autocomplete="name">
+                                <div id="emailHelp" class="form-text">Click the above field for edit token prices of the Dinner.</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ml-3 " id="details_breakfast">
+                            <div class="form-check  col-md-5">
+                                <label for="name" class="form-check-label" for="flexCheckChecked">{{ __("Set the deadline time") }}</label>
+                            </div>
+
+                            <div class="mb-3  col-md-5">
+                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="deadline_time" value="22" autocomplete="name">
+                                <div id="emailHelp" class="form-text">This is 24-hour time format(22 means 10PM). Click for edit.</div>
+                            </div>
+                        </div>
+                        <!-- <div class="row mb-3" id="details_lunch">
+                            <label for="varsity_name" class="col-md-4 col-form-label text-md-end">{{ __('University Name') }}</label>
                             <div class="col-md-5">
-                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="lunch_price" value="{{ old('varsity_name') }}"  autocomplete="name">
+                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="lunch_price" value="{{ old('varsity_name') }}" autocomplete="name">
                                 <div id="emailHelp" class="form-text">Destine the token prices of the lunch.</div>
                             </div>
                         </div>
-                        <div class="row mb-4" id="details_dinner" style="display: none;">
-                            <!-- <label for="varsity_name" class="col-md-4 col-form-label text-md-end">{{ __('University Name') }}</label> -->
+                        <div class="row mb-4" id="details_dinner">
+                            <label for="varsity_name" class="col-md-4 col-form-label text-md-end">{{ __('University Name') }}</label>
                             <div class="col-md-5">
-                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="dinner_price" value="{{ old('varsity_name') }}"  autocomplete="name">
+                                <input id="varsity_name" type="number" class="form-control1 @error('varsity_name') is-invalid @enderror" name="dinner_price" value="{{ old('varsity_name') }}" autocomplete="name">
                                 <div id="emailHelp" class="form-text">Destine the token prices of the Dinner.</div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Update') }}
                                 </button>
                             </div>
                         </div>
@@ -107,7 +144,7 @@
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function(e) {
         $('.notify_details').click(function() {
             var some = $(this).attr("id");
@@ -115,4 +152,4 @@
             $("#details_" + some).toggle();
         });
     })
-</script>
+</script> -->

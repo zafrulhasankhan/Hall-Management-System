@@ -20,18 +20,19 @@ class TokenController extends Controller
 
    public function create(Request $request)
    {
-     
+   //   dd($request->deadline_time);
       Token::create(
 
          [
 
             'hall_name' => Auth::user()->active_hallName,
-            'breakfast_price' => $request->breakfast_price,
-            'lunch_price' => $request->lunch_price,
-            'dinner_price' => $request->dinner_price,
+            'breakfast_price' => $request->breakfast_check?$request->breakfast_price:"",
+            'lunch_price' => $request->lunch_check?$request->lunch_price:"",
+            'dinner_price' => $request->dinner_check?$request->dinner_price:"",
+            'deadline_time' => $request->deadline_time,
             
          ]
       );
-      return view('admin.Token.createToken');
+      // return view('admin.Token.createToken');
    }
 }

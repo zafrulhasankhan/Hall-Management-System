@@ -27,9 +27,24 @@ class HomeController extends Controller
     public function index()
     {
         // $users = User::all();
-        $halls = complain_register::where('user_mail',Auth::user()->email)
-                 ->where('approval','yes')
-                 ->get();
-        return view('UserPanel.select_hall',['halls'=> $halls]);
+        $reg_info = complain_register::where('user_mail', Auth::user()->email)
+            ->where('approval', 'yes')
+            ->get();
+        if (!$reg_info->isEmpty()) {
+            return redirect()->route('home');
+        }
+
+        $reg_info1 = complain_register::where('user_mail', Auth::user()->email)
+            ->where('approval', '')
+            ->get();
+        if ($reg_info1->isEmpty()) {
+            return view('UserPanel.req_msg');
+        }
+
+        // return view('UserPanel.select_hall',['halls'=> $halls]);
+        $reg_info2 = complain_register::where('user_mail', Auth::user()->email);
+        if ($reg_info2->isEmpty()) {
+            return redirect()->route('AddInstuition');
+        }
     }
 }

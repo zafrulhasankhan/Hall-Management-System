@@ -51,6 +51,10 @@ class AdminController extends Controller
         
         $notify_data = FacadesDB::update('UPDATE `complain_registers` SET approval =? where id=?', ["yes", $id]);
         $complain_register = complain_register::find($id);
+        // dd($complain_register->user_mail);
+        User::where('email',$complain_register->user_mail)->update([
+            'user_hallname' => $complain_register->hall_name
+        ]);
         $user = User::where('email', $complain_register->user_mail)->first();
         $user->notify(new register_feddback_notify($user,$complain_register));
         //return view('admin.register_notification_details',['notifyData'=>$notify_data]);

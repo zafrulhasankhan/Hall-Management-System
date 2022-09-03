@@ -21,6 +21,7 @@ class Token extends Model
         'breakfast_price',
         'lunch_price',
         'dinner_price',
+        'deadline_time'
         
     ];
 }

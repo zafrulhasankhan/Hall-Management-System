@@ -15,9 +15,11 @@ class AddInstitutionController extends Controller
     public function register_verify(Request $request)
 
     {
-        $check_info = complain_register::where('user_mail', Auth::user()->email)
-            ->where('hall_name', $request->institute_name)->get();
-         
+        
+        $check_info = complain_register::where('user_mail', Auth::user()->email)->get();
+            // ->where('hall_name', $request->hall_name)
+            
+        //  dd( $request->hall_name);
 
         if ($check_info->isEmpty()){
             $user = complain_register::create(
@@ -52,14 +54,14 @@ class AddInstitutionController extends Controller
         return view('UserPanel.AddInstitution', ['institute_details' => $institute_details]);
     }
 
-    public function select_hall(Request $request)
+    public function home(Request $request)
     {
         // dd(Auth::user()->id);
-         $user_notify = DatabaseNotification::where('data->hall_name',$request->hall_name)->where('notifiable_id',Auth::user()->id)->where('notifiable_type',"App\Models\User")->get();
-         $user_notify_notice = DatabaseNotification::where('data->hall_name',$request->hall_name)->where('data->id',Auth::user()->id)->where('notifiable_type',"App\Models\complain_register")->get();
+         $user_notify = DatabaseNotification::where('data->hall_name',Auth::user()->user_hallname)->where('notifiable_id',Auth::user()->id)->where('notifiable_type',"App\Models\User")->get();
+         $user_notify_notice = DatabaseNotification::where('data->hall_name',Auth::user()->user_hallname)->where('data->id',Auth::user()->id)->where('notifiable_type',"App\Models\complain_register")->get();
         //   dd($user_notify);
         return view('home',['userNotify'=>$user_notify,'userNotice'=>$user_notify_notice]);
-        //  $user = Auth::user()->unreadNotifications->where('data->hall_name',$request->hall_name)->limit(3)->get();
+        //  $user = Auth::user()->unreadNotifications->where('data->hall_name',Auth::user()->user_hallname)->limit(3)->get();
         //  dd($user);
     }
 }
