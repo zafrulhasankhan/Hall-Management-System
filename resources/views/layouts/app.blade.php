@@ -25,9 +25,18 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" style="font-family:cursive;" href="{{ url('/') }}">
-                    Hall Management
-                </a>
+                @auth
+                    <a class="navbar-brand" style="font-family:cursive;" href="{{ url('/') }}">
+                        Hall Management
+                    </a>
+                @endauth
+                @guest
+                <div class="offset-md-4">
+                    <a class="navbar-brand " style="font-family:cursive;" href="{{ url('/') }}">
+                        Welcome to Hall Management System
+                    </a>
+                </div>
+                @endguest
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -40,15 +49,20 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('AddInstuition') }}">{{ __('Add instuition') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('complain_form') }}">{{ __('Complain') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('coupon_form') }}">{{ __("Meal's Coupon") }}</a>
-                        </li>
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('AddInstuition') }}">{{ __('Add instuition') }}</a>
+                            </li>
+
+                            @if( Auth::user()->user_hallname)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('complain_form') }}">{{ __('Complain') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('coupon_form') }}">{{ __("Meal's Coupon") }}</a>
+                                </li>
+                            @endif
+                        @endauth
                         <!-- Authentication Links -->
                         @guest
                         <!-- @if (Route::has('login'))
@@ -89,9 +103,9 @@
             @yield('content')
         </main>
     </div>
-    @yield('script_timer') 
+    @yield('script_timer')
 
-    
+
 </body>
 
 </html>

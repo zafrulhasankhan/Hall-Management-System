@@ -14,10 +14,20 @@
                         <div class="col-md-5">
                             <?php
                             $set_time  = $token_details->deadline_time
+
                             ?>
                             Remaining Time : <span id='time' style="font-weight: bold;"></span>
                         </div>
                     </div>
+                    <?php
+                    $breakfast_exist = $token_details->breakfast_price
+                    ?>
+                    <?php
+                    $lunch_exist = $token_details->lunch_price
+                    ?>
+                    <?php
+                    $dinner_exist = $token_details->dinner_price
+                    ?>
                     <div class="card-body ">
                         <p class="card-content offset-md-2 " style="font-size:16px;font-family: cursive"> Select your require event:</p>
                         <form method="POST" action="{{ url('/pay') }}">
@@ -25,7 +35,7 @@
                             @if($token_details->breakfast_price)
                             <div class="row mb-3 ml-5 offset-md-2" id="details_breakfast">
                                 <div class="form-check  col-md-5">
-                                    <input class="form-check-input notify_details" type="checkbox" value="1" name="breakfast_check">
+                                    <input class="form-check-input notify_details"  type="checkbox" value="1" id="breakfast_check" name="breakfast_check">
                                     <input class="form-check-input notify_details" type="number" value="{{$token_details->breakfast_price}}" name="breakfast_price" hidden>
                                     <label for="name" class="form-check-label" for="flexCheckChecked">Breakfast ({{$token_details->breakfast_price}} TK)</label>
                                 </div>
@@ -34,7 +44,7 @@
                             @if($token_details->lunch_price)
                             <div class="row mb-3 ml-3 offset-md-2" id="details_breakfast">
                                 <div class="form-check  col-md-5">
-                                    <input class="form-check-input notify_details" type="checkbox" value="2" name="lunch_check">
+                                    <input class="form-check-input notify_details"  type="checkbox" value="2" id="lunch_check" name="lunch_check">
                                     <input class="form-check-input notify_details" type="number" value="{{$token_details->lunch_price}}" name="lunch_price" hidden>
 
                                     <label for="name" class="form-check-label" for="flexCheckChecked">Lunch ({{$token_details->lunch_price}} TK)</label>
@@ -44,7 +54,7 @@
                             @if($token_details->dinner_price)
                             <div class="row mb-3 ml-3 offset-md-2" id="details_breakfast">
                                 <div class="form-check  col-md-5">
-                                    <input class="form-check-input notify_details" type="checkbox" value="3" name="dinner_check">
+                                    <input class="form-check-input notify_details"  type="checkbox" value="3" id="dinner_check" name="dinner_check">
                                     <input class="form-check-input notify_details" type="number" value="{{$token_details->dinner_price}}" name="dinner_price" hidden>
                                     <label for="name" class="form-check-label" for="flexCheckChecked">Dinner ({{$token_details->dinner_price}} TK)</label>
                                 </div>
@@ -53,7 +63,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-5">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" id="confirm_button" class="btn btn-primary" disabled>
                                         {{ __('Confirm') }}
                                     </button>
                                 </div>
@@ -112,7 +122,7 @@
         var set_time = '<?php echo $set_time ?>';
         var dead_time = set_time + ":" + 00 + ":" + 0;
         // console.log(dead_time);
-        if (time <= "17:00:0" && time <= dead_time) {
+        if (time >= "17:00:0" && time <= dead_time) {
             show_token_config.style.display = "block";
         } else {
             show_token_config.style.display = "none";
@@ -121,6 +131,19 @@
         }
 
         // end coupon's date setting
+    </script>
+    <script>
+        // confirm button enable or disable.
+        $(document).ready(function() {
+            $(":checkbox").click(function() {
+                var n = $("input:checked").length;
+                if (n < 1) {
+                    $("button").attr("disabled", "disabled");
+                } else {
+                    $("button").removeAttr("disabled");
+                }
+            });
+        });
     </script>
     @endsection
 </body>
