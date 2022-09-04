@@ -89,29 +89,9 @@
             @yield('content')
         </main>
     </div>
-    <script>
-        // start coupon's date setting
-        const timenow = new Date();
-        document.getElementById("today_date").innerHTML = timenow.toDateString();
+    @yield('script_timer') 
 
-        var today = new Date()
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var show_token_config = document.getElementById("show_token_config");
-        
-        var set_time = '<?php echo $set_time ?>';
-        var dead_time = set_time+":"+00+":"+0;
-        // console.log(dead_time);
-        if (time >= "17:00:0" && time <= dead_time){
-          show_token_config.style.display = "block";
-        }
-        else{
-          show_token_config.style.display = "none";
-          var time_over_card = document.getElementById("time_over_card");
-          time_over_card.style.display = "block";
-        }
-            
-        // end coupon's date setting
-    </script>
+    
 </body>
 
 </html>

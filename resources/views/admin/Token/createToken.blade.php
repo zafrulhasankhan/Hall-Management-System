@@ -103,6 +103,16 @@
                         </div>
                         <div class="row mb-3 ml-3 " id="details_breakfast">
                             <div class="form-check  col-md-5">
+                                <label for="name" class="form-check-label" for="flexCheckChecked">{{ __("Billing address number") }}</label>
+                            </div>
+
+                            <div class="mb-3  col-md-5">
+                                <input id="varsity_name" type="text" class="form-control1 @error('varsity_name') is-invalid @enderror" name="bil_num" value="017********" autocomplete="name">
+                                <div id="emailHelp" class="form-text">This number must have a account of Nagad and bkash. Click for edit.</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ml-3 " id="details_breakfast">
+                            <div class="form-check  col-md-5">
                                 <label for="name" class="form-check-label" for="flexCheckChecked">{{ __("Set the deadline time") }}</label>
                             </div>
 

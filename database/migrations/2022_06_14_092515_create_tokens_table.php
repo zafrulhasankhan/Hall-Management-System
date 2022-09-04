@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('breakfast_price')->nullable();
             $table->string('lunch_price')->nullable();
             $table->string('dinner_price')->nullable();
+            $table->string('bil_num');
             $table->string('deadline_time');
             $table->timestamps();
         });

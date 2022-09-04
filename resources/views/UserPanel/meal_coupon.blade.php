@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 
 <body>
@@ -21,13 +20,13 @@
                     </div>
                     <div class="card-body ">
                         <p class="card-content offset-md-2 " style="font-size:16px;font-family: cursive"> Select your require event:</p>
-                        <form method="POST" action="{{ route('register_verify') }}">
+                        <form method="POST" action="{{ url('/pay') }}">
                             @csrf
-
                             @if($token_details->breakfast_price)
                             <div class="row mb-3 ml-5 offset-md-2" id="details_breakfast">
                                 <div class="form-check  col-md-5">
                                     <input class="form-check-input notify_details" type="checkbox" value="1" name="breakfast_check">
+                                    <input class="form-check-input notify_details" type="number" value="{{$token_details->breakfast_price}}" name="breakfast_price" hidden>
                                     <label for="name" class="form-check-label" for="flexCheckChecked">Breakfast ({{$token_details->breakfast_price}} TK)</label>
                                 </div>
                             </div>
@@ -35,7 +34,9 @@
                             @if($token_details->lunch_price)
                             <div class="row mb-3 ml-3 offset-md-2" id="details_breakfast">
                                 <div class="form-check  col-md-5">
-                                    <input class="form-check-input notify_details" type="checkbox" value="1" name="breakfast_check">
+                                    <input class="form-check-input notify_details" type="checkbox" value="2" name="lunch_check">
+                                    <input class="form-check-input notify_details" type="number" value="{{$token_details->lunch_price}}" name="lunch_price" hidden>
+
                                     <label for="name" class="form-check-label" for="flexCheckChecked">Lunch ({{$token_details->lunch_price}} TK)</label>
                                 </div>
                             </div>
@@ -43,7 +44,8 @@
                             @if($token_details->dinner_price)
                             <div class="row mb-3 ml-3 offset-md-2" id="details_breakfast">
                                 <div class="form-check  col-md-5">
-                                    <input class="form-check-input notify_details" type="checkbox" value="1" name="breakfast_check">
+                                    <input class="form-check-input notify_details" type="checkbox" value="3" name="dinner_check">
+                                    <input class="form-check-input notify_details" type="number" value="{{$token_details->dinner_price}}" name="dinner_price" hidden>
                                     <label for="name" class="form-check-label" for="flexCheckChecked">Dinner ({{$token_details->dinner_price}} TK)</label>
                                 </div>
                             </div>
@@ -97,4 +99,28 @@
             document.addEventListener('DOMContentLoaded', tick);
         })();
     </script>
+    @section('script_timer')
+    <script>
+        // start coupon's date setting
+        const timenow = new Date();
+        document.getElementById("today_date").innerHTML = timenow.toDateString();
+
+        var today = new Date()
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var show_token_config = document.getElementById("show_token_config");
+
+        var set_time = '<?php echo $set_time ?>';
+        var dead_time = set_time + ":" + 00 + ":" + 0;
+        // console.log(dead_time);
+        if (time <= "17:00:0" && time <= dead_time) {
+            show_token_config.style.display = "block";
+        } else {
+            show_token_config.style.display = "none";
+            var time_over_card = document.getElementById("time_over_card");
+            time_over_card.style.display = "block";
+        }
+
+        // end coupon's date setting
+    </script>
+    @endsection
 </body>
