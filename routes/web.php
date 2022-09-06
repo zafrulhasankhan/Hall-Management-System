@@ -4,10 +4,12 @@ use App\Http\Controllers\AddInstitutionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminRegisterController;
 use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\InstuitionController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\User_token_controller;
 use Illuminate\Support\Facades\Route;
@@ -62,10 +64,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::prefix('admin')->group(function () {
+    Route::get('/signup', [AdminLoginController::class, 'showsignupForm'])->name('admin.signup');
+    Route::post('/signup', [AdminRegisterController::class, 'signup'])->name('admin.signup_action');
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
-    Route::get('/', [AdminController::class, 'select_hall'])->name('admin.select_hall');
+    Route::get('/', [AdminController::class, 'select_hall'])->name('admin.hall_select');
     Route::post('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
     Route::get('notification/{id}', [AdminController::class, 'register_notification_approve'])->name('register_notification_approve');
@@ -85,6 +89,11 @@ Route::prefix('admin')->group(function () {
 
 
 });
+//super admin login 
+Route::get('/super-admin', [SuperadminController::class, 'superadmin_form'])->name('superadmin_loginform');
+Route::post('/super-admin', [SuperadminController::class, 'superadmin_verify'])->name('superadmin_loginverfiy');
+Route::get('logout/', [SuperadminController::class, 'logout'])->name('superadmin.logout');
+
 
 // SSLCOMMERZ Start
 Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);

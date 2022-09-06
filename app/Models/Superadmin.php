@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class Admin extends Authenticatable
+
+class Superadmin extends Authenticatable
 {
     use  HasFactory, Notifiable;
-    protected $guard = 'admin';
+    protected $guard = 'Superadmin';
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +20,6 @@ class Admin extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'mobileno',
-        'admin_hallname',
         'password',
     ];
 

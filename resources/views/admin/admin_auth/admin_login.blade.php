@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.admin_auth.admin_auth_layout')
 
 @section('content')
 <div class="container"><br><br><br><br>
@@ -52,6 +52,12 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                    <p class="mb-2 text-sm mx-auto">
+                        Don't have an account yet?
+                        <a href="{{ route('admin.signup') }}" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                    </p>
                 </div>
             </div>
         </div>

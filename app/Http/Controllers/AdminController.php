@@ -33,10 +33,10 @@ class AdminController extends Controller
     public function select_hall()
     {
         $halls = institution::where('admin_mail',Auth::user()->email)->get();
-        if($halls->isEmpty()){
+        if(!$halls->isEmpty()){
             return view('admin.dashboard');
         }
-        return view('admin.select_hall',['halls'=> $halls]);
+        return view('admin.hall_select',['halls'=> $halls]);
         
     }
 
