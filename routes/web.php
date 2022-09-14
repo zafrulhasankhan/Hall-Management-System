@@ -9,6 +9,7 @@ use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\InstuitionController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\Superadmin_Login_Controller;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\User_token_controller;
@@ -70,6 +71,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
     Route::get('/', [AdminController::class, 'select_hall'])->name('admin.hall_select');
+    Route::post('/hall-select', [AdminController::class, 'select_hall_submit'])->name('admin.hall_select_submit');
     Route::post('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
     Route::get('notification/{id}', [AdminController::class, 'register_notification_approve'])->name('register_notification_approve');
@@ -90,9 +92,12 @@ Route::prefix('admin')->group(function () {
 
 });
 //super admin login 
+
 Route::get('/super-admin', [SuperadminController::class, 'superadmin_form'])->name('superadmin_loginform');
-Route::post('/super-admin', [SuperadminController::class, 'superadmin_verify'])->name('superadmin_loginverfiy');
-Route::get('logout/', [SuperadminController::class, 'logout'])->name('superadmin.logout');
+
+Route::post('/super-admin', [Superadmin_Login_Controller::class, 'superadmin_verify'])->name('superadmin_loginverfiy');
+Route::get('logout/', [Superadmin_Login_Controller::class, 'logout'])->name('superadmin.logout');
+Route::get('superadmin_logout/{id}', [Superadmin_Login_Controller::class, 'verfiy_admin_click'])->name('superadmin.verfiy_admin_click');
 
 
 // SSLCOMMERZ Start

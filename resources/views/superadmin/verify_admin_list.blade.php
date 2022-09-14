@@ -22,7 +22,10 @@
                                 <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->mobileno }}</td>
-                                <td>{{ Auth::user()->name }}</td>
+                                <td>
+                                    <a href="{{ route('superadmin.verfiy_admin_click',$admin->id) }}" class="btn btn-success">verify</a>
+                                    <!--  -->
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -41,9 +44,9 @@
 @endsection
 @section('DT_script')
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready( function () {
-            $('#datatable').DataTable();
-        });
-    </script>
+<script>
+    $(document).ready(function() {
+        $('#datatable').DataTable();
+    });
+</script>
 @endsection

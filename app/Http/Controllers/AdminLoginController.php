@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\institution;
 use Illuminate\Support\Facades\Auth;
 use Route;
@@ -30,6 +31,7 @@ class AdminLoginController extends Controller
 
   public function login(Request $request)
   {
+
     // Validate the form data
     $this->validate($request, [
       'email'   => 'required|email',
@@ -37,9 +39,16 @@ class AdminLoginController extends Controller
     ]);
     // Attempt to log the user in
     if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-      // if successful, then redirect to their intended location
-      return redirect()->intended(route('admin.hall_select'));
-    }
+      // $admin_hall_check = Admin::select('admin_hallname')->where('email', $request->email)->get();
+    
+      // if ($admin_hall_check->isEmpty()) {
+      //   $halls = institution::all();
+      //   return view('admin.hall_select', ['halls' => $halls]);
+        // if successful, then redirect to their intended location
+      
+    // }
+     return redirect()->intended(route('admin.hall_select'));
+  }
     // if unsuccessful, then redirect back to the login with the form data
     return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'This Credentials does not match our records');
   }
@@ -49,6 +58,4 @@ class AdminLoginController extends Controller
     Auth::guard('admin')->logout();
     return redirect('/admin');
   }
-
-  
 }
