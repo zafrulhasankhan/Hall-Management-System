@@ -76,12 +76,17 @@ Route::prefix('admin')->group(function () {
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
     Route::get('notification/{id}', [AdminController::class, 'register_notification_approve'])->name('register_notification_approve');
     Route::get('notification/decline/{id}', [AdminController::class, 'register_notification_decline'])->name('register_notification_decline');
+
+    //List
+    Route::get('/student-list', [AdminController::class, 'student_list'])->name('admin.student_list');
+    
+
     
     //instuition route
     Route::get('create/instuition', [InstuitionController::class, 'index'])->name('admin.InstuitionForm');
     Route::get('/notice', [NoticeController::class, 'index'])->name('admin.NoticeForm');
     Route::post('/notice', [NoticeController::class, 'create'])->name('admin.Noticehandle');
-    Route::post('instuitions', [InstuitionController::class, 'create'])->name('admin.CreateInstuition');
+    Route::post('instuitions', [Superadmin_Login_Controller::class, 'create'])->name('admin.CreateInstuition');
     Route::post('complain/reply', [AdminController::class, 'complain_reply'])->name('admin.complain_reply');
 
 

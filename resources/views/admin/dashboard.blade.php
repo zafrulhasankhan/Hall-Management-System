@@ -95,13 +95,15 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h6 class="mb-0 ">Website Views</h6>
-                    <p class="text-sm ">Last Campaign Performance</p>
-                    <hr class="dark horizontal">
-                    <div class="d-flex ">
-                        <i class="material-icons text-sm my-auto me-1">schedule</i>
-                        <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-                    </div>
+                    <a href="{{route('admin.student_list')}}">
+                        <h6 class="mb-0 ">Student List</h6>
+                        <p class="text-sm ">All students of {{Auth::user()->admin_hallname}} </p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex ">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>

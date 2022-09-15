@@ -100,4 +100,9 @@ class AdminController extends Controller
         $user = User::find($request->id);
         $user->notify(new complain_reply_notify($request->id, $request->hall_name, $request->complain, $request->complain_reply));
     }
+
+    public function student_list(){
+        $list = complain_register::where('hall_name',Auth::user()->admin_hallname)->get();
+        return view('admin.studentlist',['student_list' => $list]);
+    }
 }

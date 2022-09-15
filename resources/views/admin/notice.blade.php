@@ -34,7 +34,7 @@
 
 <div class="container-fluid py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div style="text-align: center;font-size:20px;font-family: cursive" class="card-header">{{ __('Notice') }}</div>
 

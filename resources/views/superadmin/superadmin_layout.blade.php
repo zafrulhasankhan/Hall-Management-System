@@ -26,9 +26,9 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 @auth
-                    <a class="navbar-brand" style="font-family:cursive;" href="{{ url('/') }}">
-                        Hall Management
-                    </a>
+                <a class="navbar-brand" style="font-family:cursive;" href="{{ url('/') }}">
+                    Hall Management
+                </a>
                 @endauth
                 @guest
                 <div class="offset-md-4">
@@ -49,10 +49,13 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.InstuitionForm') }}">{{ __('Add instuition') }}</a>
+                        </li>
+                     @endauth
                         <!-- @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('AddInstuition') }}">{{ __('Add instuition') }}</a>
-                            </li>
+                           
 
                             @if( Auth::user()->user_hallname)
                                 <li class="nav-item">
@@ -103,9 +106,8 @@
             @yield('content')
         </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     @yield('DT_script')
 
 </body>

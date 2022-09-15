@@ -25,7 +25,7 @@ class InstuitionController extends Controller
 
     public function index()
     {
-        return view('admin.createInstuition');
+        return view('superadmin.addInstitution');
     }
 
     /**
@@ -33,22 +33,7 @@ class InstuitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        $hall = $request->hall_name;
-        $varsity = $request->varsity_name;
-        $hall_varsity = $hall.",".$varsity;
-        Institution::create(
-   
-            [
-
-                'hall_name' => $hall_varsity,
-                'description' => $request->description,
-                'admin_id' => Auth::user()->id,
-                'admin_mail' => Auth::user()->email,
-            ]
-        );
-    }
+    
 
     /**
      * Store a newly created resource in storage.
