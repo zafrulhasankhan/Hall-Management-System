@@ -72,7 +72,7 @@ Route::prefix('admin')->group(function () {
     Route::get('logout/', [AdminLoginController::class, 'logout'])->name('admin.logout');
     Route::get('/', [AdminController::class, 'select_hall'])->name('admin.hall_select');
     Route::post('/hall-select', [AdminController::class, 'select_hall_submit'])->name('admin.hall_select_submit');
-    Route::post('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    // Route::post('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('notification', [AdminController::class, 'notification'])->name('admin.notification');
     Route::get('notification/{id}', [AdminController::class, 'register_notification_approve'])->name('register_notification_approve');
     Route::get('notification/decline/{id}', [AdminController::class, 'register_notification_decline'])->name('register_notification_decline');
@@ -93,7 +93,7 @@ Route::prefix('admin')->group(function () {
 });
 //super admin login 
 
-Route::get('/super-admin', [SuperadminController::class, 'superadmin_form'])->name('superadmin_loginform');
+Route::get('/super-admin', [Superadmin_Login_Controller::class, 'superadmin_form'])->name('superadmin_loginform');
 
 Route::post('/super-admin', [Superadmin_Login_Controller::class, 'superadmin_verify'])->name('superadmin_loginverfiy');
 Route::get('logout/', [Superadmin_Login_Controller::class, 'logout'])->name('superadmin.logout');

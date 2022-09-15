@@ -14,6 +14,10 @@ class Superadmin_Login_Controller extends Controller
         $this->middleware('auth:Superadmin');
     }
 
+    public function superadmin_form()
+    {
+        return view('superadmin.superadmin_login');
+    }
 
     public function superadmin_verify(Request $request)
     {
@@ -40,7 +44,8 @@ class Superadmin_Login_Controller extends Controller
 
   public function verfiy_admin_click(Request $request,$id){
     // dd(Auth::user()->name);
-    $admin = Admin::find($id);
-    dd($admin);
+    $admin = Admin::where('id', $id)->update(['approval' => "yes"]);
+    $admin_list = Admin::all();
+    return view('superadmin.verify_admin_list',['admin_list'=>$admin_list]);
   }
 }

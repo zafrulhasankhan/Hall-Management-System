@@ -25,19 +25,27 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         // dd($request->hall_name);
-        $update_hall = FacadesDB::update('update admins set `active_hallName` = ? where email =?', [$request->hall_name, Auth::user()->email]);
-        return view('admin.dashboard', ['hall_name' => $request->hall_name]);
+        // $update_hall = FacadesDB::update('update admins set `active_hallName` = ? where email =?', [$request->hall_name, Auth::user()->email]);
+        $hall_verify_check = Admin::where('admin_hallname', Auth::user()->admin_hallname)->where('approval', "yes")->first();
+        if ($hall_verify_check) {
+            return view('admin.dashboard', ['hall_name' => Auth::user()->admin_hallname]);
+        }
     }
 
     public function select_hall()
     {
-        $admin_hall_check = Admin::select('admin_hallname')->where('email', Auth::user()->email)->get();
-
-        if ($admin_hall_check) {
+        $admin_hall_check = Admin::select('admin_hallname')->where('email', Auth::user()->email)->first();
+        $admin_hall_approve_check = Admin::select('approval')->where('email', Auth::user()->email)->first();
+        // dd($admin_hall_approve_check->approval);
+        if (!$admin_hall_check->admin_hallname) {
             $halls = institution::all();
-            return view('admin.hall_select', ['halls' => $halls]);
+            $card = 'no_hall';
+            return view('admin.hall_select', ['halls' => $halls,'ret_msg' =>$card]);
+        } elseif ($admin_hall_approve_check->approval) {
+            return view('admin.dashboard', ['hall_name' => Auth::user()->admin_hallname]);
         } else {
-            dd("wait");
+            $card = 'approve_wait';
+            return view('admin.hall_select', ['ret_msg' => $card]);
         }
         // $halls = institution::where('admin_mail',Auth::user()->email)->get();
         // if(!$halls->isEmpty()){
@@ -50,6 +58,8 @@ class AdminController extends Controller
     public function select_hall_submit(Request $request)
     {
         $admin = Admin::where('email', Auth::user()->email)->update(['admin_hallname' => $request->hall_name]);
+        $card = 'approve_wait';
+        return view('admin.hall_select', ['ret_msg' => $card]);
     }
     public function notification(Request $request)
     {

@@ -11,7 +11,7 @@
                     <form method="POST" action="{{ route('select_hall') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __(' Approved Hall Name') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('  Hall Name') }}</label>
                             <div class="col-md-6">
                                 <select name="hall_name" id="parent_id1" class="form-control dynamic" data-dependent="details" required>
                                     <option value="" selected disabled> Select Hall Name</option>

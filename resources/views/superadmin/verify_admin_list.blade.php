@@ -23,8 +23,11 @@
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->mobileno }}</td>
                                 <td>
+                                    @if($admin->approval)
+                                    <a href="#" class="btn btn-secondary">verified</a>
+                                    @else
                                     <a href="{{ route('superadmin.verfiy_admin_click',$admin->id) }}" class="btn btn-success">verify</a>
-                                    <!--  -->
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

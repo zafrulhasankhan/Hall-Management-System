@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('admin.admin_auth.admin_auth_layout')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Complain') }}</div>
+                <div class="card-header">{{ __('Hall Selection') }}</div>
 
                 <div class="card-body">
+                    @if($ret_msg === "no_hall")
                     <form method="POST" action="{{ route('admin.hall_select_submit') }}">
                         @csrf
                         <div class="row mb-3">
@@ -22,7 +23,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -32,6 +33,14 @@
                             </div>
                         </div>
                     </form>
+                    @endif
+                    @if($ret_msg === "approve_wait")
+                    <div style="text-align: center;font-size:20px;font-family: cursive" class="card-header">
+
+                        Your Hall selection Successfully submitted. Wait until Super admin approves your registration.
+
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
