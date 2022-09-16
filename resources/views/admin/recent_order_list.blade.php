@@ -1,7 +1,7 @@
 @extends('layouts.AppTemplate')
 
 <style>
-      .pull-left {
+    .pull-left {
         float: left !important;
     }
 
@@ -21,7 +21,7 @@
         padding: 5px;
         
     }
-
+    /* .dataTables_length, .dataTables_length select{ font-size: 2em;} */
 </style>
 
 @section('nav-bread')
@@ -44,8 +44,10 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">{{ __('Student List') }}</h6>
+                        <h6 class="text-white text-capitalize ps-3">{{ __('Recent Token Orders List') }}</h6>
+                        <h6 class="text-white text-capitalize ps-3">{{ $recent_order_list[0]->date }}</h6>
                     </div>
+
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
@@ -54,48 +56,44 @@
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department Name</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student ID</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Session</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Room no</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Agent No.</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Breakfast</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lunch</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dinner</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($student_list as $student)
+                                @foreach ($recent_order_list as $list)
                                 <tr>
                                     <td>
                                         <div class="d-flex px-2 py-1">
 
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $student->user_name }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $list->name }}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{ $student->user_mail }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $list->email }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $list->phone }}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm bg-gradient-success">{{ $student->dept_name }}</span>
+                                        <span class="badge badge-sm bg-gradient-success">{{ $list->amount }}</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $student->student_ID }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $list->breakfast }}</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $student->session }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $list->lunch}}</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $student->roomno }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $list->dinner }}</span>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        @if($student->approval)
-                                        <span class="text-secondary text-xs font-weight-bold">Verified</span>
 
-                                        @else
-                                        <a href="{{ route('superadmin.verfiy_admin_click',$admin->id) }}" class="btn btn-success">verify</a>
-                                        @endif
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -118,9 +116,8 @@
     $(document).ready(function() {
         $('#datatable').DataTable({
             "dom": '<"pull-right"f><"pull-left"l>tip',
-    
-             "bPaginate": '<"pull-right"f>',
-                
+            pagingType: 'simple_numbers',
+            
         });
     });
 </script>

@@ -150,7 +150,7 @@ class SslCommerzPaymentController extends Controller
         if (!$order_check->isEmpty()) {
             $update_product = Token_order::
                  where('transaction_id', $post_data['tran_id'])
-                ->updateOrInsert([
+                ->create([
                     'hall_name' => Auth::user()->user_hallname,
                     'date' => $now->toFormattedDateString(),
                     'name' => $post_data['cus_name'],

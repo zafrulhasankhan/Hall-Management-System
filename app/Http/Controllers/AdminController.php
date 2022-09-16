@@ -108,7 +108,11 @@ class AdminController extends Controller
     public function recent_orders()
     {
         
-        $latest_order = Token_order::latest();
-        dd($latest_order);
+        // $latest_order = Token_order::latest()->get();
+        $latest_order = Token_order::orderBy('created_at','desc')->first();
+        $latest_order_list = Token_order::where('date',$latest_order->date)->get();
+        return view('admin.recent_order_list', ['recent_order_list' => $latest_order_list]);
+
+        // dd($latest_order_list);
     }
 }
