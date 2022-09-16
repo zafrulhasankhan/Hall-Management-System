@@ -1,23 +1,15 @@
 @extends('layouts.AppTemplate')
 
 <style>
-    .form-control1 {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-clip: padding-box;
-        background-color: #f8fafc;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        color: #212529;
-        display: block;
-        font-size: .9rem;
-        font-weight: 400;
-        line-height: 1.6;
-        padding: .375rem .75rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-        width: 100%;
+    .pull-left {
+        float: left !important;
     }
+
+    .pull-right {
+        float: right !important;
+        padding: 5px;
+    }
+
 </style>
 
 @section('nav-bread')
@@ -38,14 +30,14 @@
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
-                <div  class="card-header text-center p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">{{ __('Student List') }}</h6>
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-4"  id="datatable">
+                        <table class="table align-items-center mb-4" id="datatable">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
@@ -55,7 +47,7 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Session</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Room no</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,7 +85,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                              @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -108,14 +100,16 @@
 
 @endsection
 @section('DT_script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
         $('#datatable').DataTable({
-        "dom": '<"pull-left"f><"pull-left"l>tip'
-    });
+            "dom": '<"pull-right"f><"pull-left"l>tip',
+    
+             "bPaginate": '<"pull-right"f>',
+                
+        });
     });
 </script>
 @endsection

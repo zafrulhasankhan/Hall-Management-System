@@ -6,14 +6,13 @@ use App\Models\Admin;
 use App\Models\complain;
 use App\Models\complain_register;
 use App\Models\institution;
+use App\Models\Token_order;
 use App\Models\User;
 use App\Notifications\complain_reply_notify;
 use App\Notifications\register_feddback_notify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use DB;
-use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -40,7 +39,7 @@ class AdminController extends Controller
         if (!$admin_hall_check->admin_hallname) {
             $halls = institution::all();
             $card = 'no_hall';
-            return view('admin.hall_select', ['halls' => $halls,'ret_msg' =>$card]);
+            return view('admin.hall_select', ['halls' => $halls, 'ret_msg' => $card]);
         } elseif ($admin_hall_approve_check->approval) {
             return view('admin.dashboard', ['hall_name' => Auth::user()->admin_hallname]);
         } else {
@@ -70,7 +69,7 @@ class AdminController extends Controller
     public function register_notification_approve($id)
     {
 
-        $notify_data = FacadesDB::update('UPDATE `complain_registers` SET approval =? where id=?', ["yes", $id]);
+        $notify_data = DB::update('UPDATE `complain_registers` SET approval =? where id=?', ["yes", $id]);
         $complain_register = complain_register::find($id);
         // dd($complain_register->user_mail);
         User::where('email', $complain_register->user_mail)->update([
@@ -83,7 +82,7 @@ class AdminController extends Controller
 
     public function register_notification_decline($id)
     {
-        $notify_data = FacadesDB::delete('delete from `complain_registers` where id=?', [$id]);
+        $notify_data = DB::delete('delete from `complain_registers` where id=?', [$id]);
         dd($id);
         return view('admin.register_notification_details', ['notifyData' => $notify_data]);
     }
@@ -101,8 +100,15 @@ class AdminController extends Controller
         $user->notify(new complain_reply_notify($request->id, $request->hall_name, $request->complain, $request->complain_reply));
     }
 
-    public function student_list(){
-        $list = complain_register::where('hall_name',Auth::user()->admin_hallname)->get();
-        return view('admin.studentlist',['student_list' => $list]);
+    public function student_list()
+    {
+        $list = complain_register::where('hall_name', Auth::user()->admin_hallname)->get();
+        return view('admin.studentlist', ['student_list' => $list]);
+    }
+    public function recent_orders()
+    {
+        
+        $latest_order = Token_order::latest();
+        dd($latest_order);
     }
 }

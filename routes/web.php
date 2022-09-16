@@ -79,6 +79,7 @@ Route::prefix('admin')->group(function () {
 
     //List
     Route::get('/student-list', [AdminController::class, 'student_list'])->name('admin.student_list');
+    Route::get('/recent-orders', [AdminController::class, 'recent_orders'])->name('admin.recent_orders');
     
 
     

@@ -45,12 +45,13 @@ class ComplainController extends Controller
         $user_data = complain_register::where("user_mail", Auth::user()->email)->
                     where("hall_name", $request->hall_name)
                     ->first();
-        $datas = institution::where("hall_name", $request->hall_name)->get();
+        $datas = Admin::where("admin_hallname", Auth::user()->user_hallname)->get();
+        // dd($datas);
         foreach ($datas as $data) {
 
-            $admin = Admin::find($data->admin_id);
+            // $admin = Admin::find($data->admin_id);
        
-        $admin->notify(new complain_send_notify($complain_info,$user_data));
+        $data->notify(new complain_send_notify($complain_info,$user_data));
         }
     }
 }

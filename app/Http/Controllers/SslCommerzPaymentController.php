@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use App\Models\Token_order;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
@@ -143,12 +144,12 @@ class SslCommerzPaymentController extends Controller
 
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
-        $order_check =  DB::table('token_orders')
-            ->where('email', Auth::user()->email)
+        $order_check =  Token_order::
+            where('email', Auth::user()->email)
             ->where('date', $now->toFormattedDateString())->get();
-        if ($order_check->isEmpty()) {
-            $update_product = DB::table('token_orders')
-                ->where('transaction_id', $post_data['tran_id'])
+        if (!$order_check->isEmpty()) {
+            $update_product = Token_order::
+                 where('transaction_id', $post_data['tran_id'])
                 ->updateOrInsert([
                     'hall_name' => Auth::user()->user_hallname,
                     'date' => $now->toFormattedDateString(),
@@ -262,8 +263,8 @@ class SslCommerzPaymentController extends Controller
         $sslc = new SslCommerzNotification();
 
         #Check order status in order tabel against the transaction id or order id.
-        $order_detials = DB::table('token_orders')
-            ->where('transaction_id', $tran_id)
+        $order_detials = Token_order::
+             where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
         if ($order_detials->status == 'Pending') {
@@ -275,8 +276,8 @@ class SslCommerzPaymentController extends Controller
                 in order table as Processing or Complete.
                 Here you can also sent sms or email for successfull transaction to customer
                 */
-                $update_product = DB::table('token_orders')
-                    ->where('transaction_id', $tran_id)
+                $update_product = Token_order::
+                     where('transaction_id', $tran_id)
                     ->update(['status' => 'Processing']);
 
                 echo "<br >Transaction is successfully Completed";
@@ -285,8 +286,8 @@ class SslCommerzPaymentController extends Controller
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transation validation failed.
                 Here you need to update order status as Failed in order table.
                 */
-                $update_product = DB::table('token_orders')
-                    ->where('transaction_id', $tran_id)
+                $update_product = Token_order::
+                    where('transaction_id', $tran_id)
                     ->update(['status' => 'Failed']);
                 echo "validation Fail";
             }
@@ -305,13 +306,13 @@ class SslCommerzPaymentController extends Controller
     {
         $tran_id = $request->input('tran_id');
 
-        $order_detials = DB::table('token_orders')
-            ->where('transaction_id', $tran_id)
+        $order_detials = Token_order::
+             where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
         if ($order_detials->status == 'Pending') {
-            $update_product = DB::table('token_orders')
-                ->where('transaction_id', $tran_id)
+            $update_product = Token_order::
+                 where('transaction_id', $tran_id)
                 ->update(['status' => 'Failed']);
             echo "Transaction is Falied";
         } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
@@ -325,13 +326,13 @@ class SslCommerzPaymentController extends Controller
     {
         $tran_id = $request->input('tran_id');
 
-        $order_detials = DB::table('token_orders')
-            ->where('transaction_id', $tran_id)
+        $order_detials = Token_order::
+            where('transaction_id', $tran_id)
             ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
         if ($order_detials->status == 'Pending') {
-            $update_product = DB::table('token_orders')
-                ->where('transaction_id', $tran_id)
+            $update_product = Token_order::
+                where('transaction_id', $tran_id)
                 ->update(['status' => 'Canceled']);
             echo "Transaction is Cancel";
         } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
@@ -350,8 +351,8 @@ class SslCommerzPaymentController extends Controller
             $tran_id = $request->input('tran_id');
 
             #Check order status in order tabel against the transaction id or order id.
-            $order_details = DB::table('token_orders')
-                ->where('transaction_id', $tran_id)
+            $order_details = Token_order::
+                where('transaction_id', $tran_id)
                 ->select('transaction_id', 'status', 'currency', 'amount')->first();
 
             if ($order_details->status == 'Pending') {
@@ -363,8 +364,8 @@ class SslCommerzPaymentController extends Controller
                     in order table as Processing or Complete.
                     Here you can also sent sms or email for successful transaction to customer
                     */
-                    $update_product = DB::table('token_orders')
-                        ->where('transaction_id', $tran_id)
+                    $update_product = Token_order::
+                        where('transaction_id', $tran_id)
                         ->update(['status' => 'Processing']);
 
                     echo "Transaction is successfully Completed";
@@ -373,8 +374,8 @@ class SslCommerzPaymentController extends Controller
                     That means IPN worked, but Transation validation failed.
                     Here you need to update order status as Failed in order table.
                     */
-                    $update_product = DB::table('token_orders')
-                        ->where('transaction_id', $tran_id)
+                    $update_product = Token_order::
+                        where('transaction_id', $tran_id)
                         ->update(['status' => 'Failed']);
 
                     echo "validation Fail";

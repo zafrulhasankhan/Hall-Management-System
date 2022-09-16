@@ -117,13 +117,15 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h6 class="mb-0 "> Daily Sales </h6>
-                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>
-                    <hr class="dark horizontal">
-                    <div class="d-flex ">
-                        <i class="material-icons text-sm my-auto me-1">schedule</i>
-                        <p class="mb-0 text-sm"> updated 4 min ago </p>
-                    </div>
+                    <a href="{{ route('admin.recent_orders') }}">
+                        <h6 class="mb-0 "> Recent Token Orders </h6>
+                        <p class="text-sm "> This is the latest day of orders </p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex ">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> updated 4 min ago </p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
