@@ -122,7 +122,7 @@
         var set_time = '<?php echo $set_time ?>';
         var dead_time = set_time + ":" + 00 + ":" + 0;
         // console.log(dead_time);
-        if (time >= "17:00:0" && time <= dead_time) {
+        if (time >= "17:00:0" && time >= dead_time) {
             show_token_config.style.display = "block";
         } else {
             show_token_config.style.display = "none";

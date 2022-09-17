@@ -107,9 +107,9 @@ class SslCommerzPaymentController extends Controller
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = Auth::user()->name;
         $post_data['cus_email'] = Auth::user()->email;
-        $post_data['breakfast'] = $request->breakfast_check ? $request->breakfast_price : "";
-        $post_data['lunch'] = $request->lunch_check ? $request->lunch_price : "";
-        $post_data['dinner'] = $request->dinner_check ? $request->dinner_price : "";
+        $post_data['breakfast'] = $request->breakfast_check ? $request->breakfast_price : NULL;
+        $post_data['lunch'] = $request->lunch_check ? $request->lunch_price : NULL;
+        $post_data['dinner'] = $request->dinner_check ? $request->dinner_price : NULL;
         $post_data['cus_state'] = "";
         $post_data['cus_postcode'] = "";
         $post_data['cus_country'] = "Bangladesh";

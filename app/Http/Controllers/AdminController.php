@@ -107,12 +107,27 @@ class AdminController extends Controller
     }
     public function recent_orders()
     {
-        
-        // $latest_order = Token_order::latest()->get();
-        $latest_order = Token_order::orderBy('created_at','desc')->first();
-        $latest_order_list = Token_order::where('date',$latest_order->date)->get();
-        return view('admin.recent_order_list', ['recent_order_list' => $latest_order_list]);
 
-        // dd($latest_order_list);
+        // $latest_order = Token_order::latest()->get();
+        $latest_order = Token_order::orderBy('created_at', 'desc')->first();
+        $latest_order_list = Token_order::where('date', $latest_order->date)->get();
+        $count_break = $latest_order_list->whereNotNull('breakfast')->count();
+        $count_lunch = $latest_order_list->whereNotNull('lunch')->count();
+        $count_dinner = $latest_order_list->whereNotNull('dinner')->count();
+        $sum_break = $latest_order_list->whereNotNull('breakfast')->sum('breakfast');
+        $sum_lunch = $latest_order_list->whereNotNull('lunch')->sum('lunch');
+        $sum_dinner = $latest_order_list->whereNotNull('dinner')->sum('dinner');
+        $total_amount = $sum_break+$sum_lunch+$sum_dinner ;
+        return view('admin.recent_order_list', ['recent_order_list' => $latest_order_list])->with('data', [
+            'count_break' => $count_break,
+            'count_lunch' => $count_lunch,
+            'count_dinner' => $count_dinner,
+            'sum_break' => $sum_break,
+            'sum_lunch' => $sum_lunch,
+            'sum_dinner' => $sum_dinner,
+            'sum_total' => $total_amount,
+
+
+        ]);
     }
 }

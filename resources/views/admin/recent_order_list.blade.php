@@ -10,17 +10,38 @@
         padding: 5px;
     }
 
-    .dataTables_paginate  {
+    .dataTables_paginate {
         float: right !important;
         padding: 5px;
-        
-        
+
+
     }
 
     .dataTables_info {
         padding: 5px;
-        
+
     }
+
+    .summary {
+        float: right;
+        color: white;
+    }
+    .left{
+        margin-left: 65px;
+        padding: 20px;
+        float: left;
+    }
+    .right{
+        margin-right: 30px;
+        padding: 20px;
+        float: right;
+    }
+    .headline{
+        text-align: center;
+        font: 20px;
+        font-family: cursive;
+    }
+
     /* .dataTables_length, .dataTables_length select{ font-size: 2em;} */
 </style>
 
@@ -45,11 +66,13 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">{{ __('Recent Token Orders List') }}</h6>
+                        <button class="btn btn-text summary" id="button_summary"><span style="color:white">Show summary</span></button>
                         <h6 class="text-white text-capitalize ps-3">{{ $recent_order_list[0]->date }}</h6>
+
                     </div>
 
                 </div>
-                <div class="card-body px-0 pb-2">
+                <div class="card-body px-0 pb-2" id="details">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-4" id="datatable">
                             <thead>
@@ -100,6 +123,21 @@
                         </table>
                     </div>
                 </div>
+                <div class="card-body px-0 pb-2" id="summary" style="display: none">
+                <div class="headline"><u>Meal Summary of {{ $recent_order_list[0]->date }}</u></div>
+                    <div class="left">
+                        <span>No. of Breakfast's Meal : {{$data['count_break']}}</span><br>
+                        <span>No. of Lunch's Meal : {{$data['count_lunch']}}</span><br>
+                        <span>No. of Dinner's Meal : {{$data['count_dinner']}}</span><br>
+                    </div>
+                    <div class="right">
+                        <span>Total amount of Breakfast's Meal : {{$data['sum_break']}} TK</span><br>
+                        <span>Total amount of Lunch's Meal : {{$data['sum_lunch']}} TK</span><br>
+                        <span>Total amount of Dinner's Meal : {{$data['sum_dinner']}} TK</span><br>
+                        <span>Total Amount: {{$data['sum_total']}} TK</span>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -117,8 +155,24 @@
         $('#datatable').DataTable({
             "dom": '<"pull-right"f><"pull-left"l>tip',
             pagingType: 'simple_numbers',
-            
+
+        });
+
+        $('#button_summary').on("click", function(e) {
+            $("#details, #summary").toggle();
         });
     });
+
+    // function myFunction() {
+    //     var x = document.getElementById("details");
+    //     var y = document.getElementById("summary");
+    //     if (x.style.display === "none") {
+    //         y.style.display = "block";
+    //     }
+    //     elseif(y.style.display === "none") {
+    //         x.style.display = "block";
+
+    //     }
+    // }
 </script>
 @endsection
