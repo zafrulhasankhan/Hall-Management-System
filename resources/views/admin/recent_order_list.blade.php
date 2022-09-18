@@ -26,21 +26,30 @@
         float: right;
         color: white;
     }
-    .left{
+
+    .left {
         margin-left: 65px;
         padding: 20px;
         float: left;
     }
-    .right{
+
+    .right {
         margin-right: 30px;
         padding: 20px;
         float: right;
     }
-    .headline{
+
+    .headline {
         text-align: center;
         font: 20px;
         font-family: cursive;
     }
+
+@media print{
+    html,body{
+        font-family: cursive;
+    }
+}
 
     /* .dataTables_length, .dataTables_length select{ font-size: 2em;} */
 </style>
@@ -124,19 +133,21 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2" id="summary" style="display: none">
-                <div class="headline"><u>Meal Summary of {{ $recent_order_list[0]->date }}</u></div>
-                    <div class="left">
-                        <span>No. of Breakfast's Meal : {{$data['count_break']}}</span><br>
-                        <span>No. of Lunch's Meal : {{$data['count_lunch']}}</span><br>
-                        <span>No. of Dinner's Meal : {{$data['count_dinner']}}</span><br>
+                    <div id="print">
+                        <div class="headline"><u>Meal Summary of {{ $recent_order_list[0]->date }}</u></div>
+                        <div class="left">
+                            <span>No. of Breakfast's Meal : {{$data['count_break']}}</span><br>
+                            <span>No. of Lunch's Meal : {{$data['count_lunch']}}</span><br>
+                            <span>No. of Dinner's Meal : {{$data['count_dinner']}}</span><br>
+                        </div>
+                        <div class="right">
+                            <span>Total amount of Breakfast's Meal : {{$data['sum_break']}} TK</span><br>
+                            <span>Total amount of Lunch's Meal : {{$data['sum_lunch']}} TK</span><br>
+                            <span>Total amount of Dinner's Meal : {{$data['sum_dinner']}} TK</span><br>
+                            <span>Total Amount: {{$data['sum_total']}} TK</span>
+                        </div>
                     </div>
-                    <div class="right">
-                        <span>Total amount of Breakfast's Meal : {{$data['sum_break']}} TK</span><br>
-                        <span>Total amount of Lunch's Meal : {{$data['sum_lunch']}} TK</span><br>
-                        <span>Total amount of Dinner's Meal : {{$data['sum_dinner']}} TK</span><br>
-                        <span>Total Amount: {{$data['sum_total']}} TK</span>
-                    </div>
-                    
+                    <input class="print_button btn btn-secondary offset-md-5 type="button" value="Print" onclick="printDiv()">
                 </div>
             </div>
         </div>
@@ -174,5 +185,18 @@
 
     //     }
     // }
+</script>
+<script type="text/javascript" src="js/jquery.printPage.js"></script>
+<script>
+    function printDiv() {
+        var divContents = document.getElementById("print").innerHTML;
+        var a = window.open('', '', 'height=500, width=500');
+        a.document.write('<html>');
+        a.document.write('<body > <h2>');
+        a.document.write(divContents);
+        a.document.write('</body></html>');
+        a.document.close();
+        a.print();
+    }
 </script>
 @endsection
