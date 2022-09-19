@@ -51,7 +51,7 @@
                     <ul class="navbar-nav ms-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.InstuitionForm') }}">{{ __('Add instuition') }}</a>
+                            <a class="nav-link" href="{{ route('superadmin.InstuitionForm') }}">{{ __('Add instuition') }}</a>
                         </li>
                      @endauth
                         <!-- @auth

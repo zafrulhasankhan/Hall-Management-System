@@ -80,14 +80,15 @@ Route::prefix('admin')->group(function () {
     //List
     Route::get('/student-list', [AdminController::class, 'student_list'])->name('admin.student_list');
     Route::get('/recent-orders', [AdminController::class, 'recent_orders'])->name('admin.recent_orders');
+    Route::get('/orders-for-date', [AdminController::class, 'date_for_token_order_form'])->name('admin.date_for_token_order_form');
+    Route::post('/orders-for-date/', [AdminController::class, 'date_for_token_order_submit'])->name('admin.date_for_token_order_submit');
     
 
     
     //instuition route
-    Route::get('create/instuition', [InstuitionController::class, 'index'])->name('admin.InstuitionForm');
+    
     Route::get('/notice', [NoticeController::class, 'index'])->name('admin.NoticeForm');
     Route::post('/notice', [NoticeController::class, 'create'])->name('admin.Noticehandle');
-    Route::post('instuitions', [Superadmin_Login_Controller::class, 'create'])->name('admin.CreateInstuition');
     Route::post('complain/reply', [AdminController::class, 'complain_reply'])->name('admin.complain_reply');
 
 
@@ -100,10 +101,12 @@ Route::prefix('admin')->group(function () {
 //super admin login 
 
 Route::get('/super-admin', [Superadmin_Login_Controller::class, 'superadmin_form'])->name('superadmin_loginform');
-
+Route::get('/super-admin/home', [SuperadminController::class, 'admin_list'])->name('Superadmin.adminlist');
 Route::post('/super-admin', [Superadmin_Login_Controller::class, 'superadmin_verify'])->name('superadmin_loginverfiy');
 Route::get('logout/', [Superadmin_Login_Controller::class, 'logout'])->name('superadmin.logout');
-Route::get('superadmin_logout/{id}', [Superadmin_Login_Controller::class, 'verfiy_admin_click'])->name('superadmin.verfiy_admin_click');
+Route::get('superadmin_logout/{id}', [SuperadminController::class, 'verfiy_admin_click'])->name('superadmin.verfiy_admin_click');
+Route::get('create/instuition', [SuperadminController::class, 'index'])->name('superadmin.InstuitionForm');
+Route::post('instuitions', [SuperadminController::class, 'create'])->name('admin.CreateInstuition');
 
 
 // SSLCOMMERZ Start

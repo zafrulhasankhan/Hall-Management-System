@@ -44,8 +44,12 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        'Superadmin' => [
+        'superadmin' => [
             'driver' => 'session',
+            'provider' => 'superadmins',
+        ],
+        'superadmin-api' => [
+            'driver' => 'token',
             'provider' => 'superadmins',
         ],
         'admin-api' => [

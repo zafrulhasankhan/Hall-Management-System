@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use DateTime;
 use App\Models\Admin;
 use App\Models\complain;
 use App\Models\complain_register;
@@ -12,6 +14,7 @@ use App\Notifications\complain_reply_notify;
 use App\Notifications\register_feddback_notify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -117,7 +120,42 @@ class AdminController extends Controller
         $sum_break = $latest_order_list->whereNotNull('breakfast')->sum('breakfast');
         $sum_lunch = $latest_order_list->whereNotNull('lunch')->sum('lunch');
         $sum_dinner = $latest_order_list->whereNotNull('dinner')->sum('dinner');
-        $total_amount = $sum_break+$sum_lunch+$sum_dinner ;
+        $total_amount = $sum_break + $sum_lunch + $sum_dinner;
+        return view('admin.recent_order_list', ['recent_order_list' => $latest_order_list])->with('data', [
+            'count_break' => $count_break,
+            'count_lunch' => $count_lunch,
+            'count_dinner' => $count_dinner,
+            'sum_break' => $sum_break,
+            'sum_lunch' => $sum_lunch,
+            'sum_dinner' => $sum_dinner,
+            'sum_total' => $total_amount,
+
+
+        ]);
+    }
+
+    public function date_for_token_order_form()
+    {
+        return view('admin.date_for_token_order');
+    }
+
+    public function date_for_token_order_submit(Request $request)
+    {
+        // $date = new DateTime();
+        // $now = Carbon::now();
+        // $now_date = $now->toDateString();
+    
+        
+        $date = \Carbon\Carbon::createFromFormat('Y-m-d', $request->date)->format('d F Y');
+        // dd($newDateFormat);
+        $latest_order_list = Token_order::where('date', $date)->get();
+        $count_break = $latest_order_list->whereNotNull('breakfast')->count();
+        $count_lunch = $latest_order_list->whereNotNull('lunch')->count();
+        $count_dinner = $latest_order_list->whereNotNull('dinner')->count();
+        $sum_break = $latest_order_list->whereNotNull('breakfast')->sum('breakfast');
+        $sum_lunch = $latest_order_list->whereNotNull('lunch')->sum('lunch');
+        $sum_dinner = $latest_order_list->whereNotNull('dinner')->sum('dinner');
+        $total_amount = $sum_break + $sum_lunch + $sum_dinner;
         return view('admin.recent_order_list', ['recent_order_list' => $latest_order_list])->with('data', [
             'count_break' => $count_break,
             'count_lunch' => $count_lunch,

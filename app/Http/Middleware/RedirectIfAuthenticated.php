@@ -25,7 +25,12 @@ class RedirectIfAuthenticated
               if (Auth::guard($guard)->check()) {
                 return redirect()->route('admin.dashboard');
               }
-             
+
+              case 'superadmin':
+                if (Auth::guard($guard)->check()) {
+                  return redirect()->route('Superadmin.adminlist');
+                }
+
             default:
               if (Auth::guard($guard)->check()) {
                   return redirect('/');

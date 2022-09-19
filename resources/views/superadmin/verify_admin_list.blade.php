@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header" style="text-align: center;font-size:20px;font-family: cursive">{{ __('Admin List') }}</div>
                 <div class="card-body">
@@ -34,12 +34,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                    <p class="mb-2 text-sm mx-auto">
-                        Already have an account?
-                        <a href="{{ route('admin.login') }}" class="text-primary text-gradient font-weight-bold">Sign in</a>
-                    </p>
-                </div>
+               
             </div>
         </div>
     </div>

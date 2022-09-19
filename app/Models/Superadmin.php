@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Superadmin extends Authenticatable
 {
     use  HasFactory, Notifiable;
-    protected $guard = 'Superadmin';
+    protected $guard = 'superadmin';
 
     /**
      * The attributes that are mass assignable.

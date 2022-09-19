@@ -142,17 +142,18 @@ class SslCommerzPaymentController extends Controller
         $date = new DateTime();
         $now = Carbon::now();
 
-
+        $dateformat = \Carbon\Carbon::createFromFormat('Y-m-d', $now->toDateString())->format('d F Y');
         #Before  going to initiate the payment order status need to insert or update as Pending.
         $order_check =  Token_order::
             where('email', Auth::user()->email)
-            ->where('date', $now->toFormattedDateString())->get();
-        if (!$order_check->isEmpty()) {
+            // ->where('date', $now->toFormattedDateString())->get();
+            ->where('date', $dateformat)->get();
+        if ($order_check->isEmpty()) {
             $update_product = Token_order::
                  where('transaction_id', $post_data['tran_id'])
                 ->create([
                     'hall_name' => Auth::user()->user_hallname,
-                    'date' => $now->toFormattedDateString(),
+                    'date' => $dateformat,
                     'name' => $post_data['cus_name'],
                     'email' => $post_data['cus_email'],
                     'phone' => $post_data['cus_phone'],

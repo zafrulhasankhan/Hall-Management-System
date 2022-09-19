@@ -23,10 +23,6 @@ class InstuitionController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index()
-    {
-        return view('superadmin.addInstitution');
-    }
 
     /**
      * Show the form for creating a new resource.
