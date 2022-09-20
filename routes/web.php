@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //institution route
     Route::get('add-instuitions', [AddInstitutionController::class, 'AddInstitution'])->name('AddInstuition');
+    Route::get('notification', [AddInstitutionController::class, 'notification'])->name('user.notification');
     Route::post('user/dashboard', [AddInstitutionController::class, 'register_verify'])->name('register_verify');
     Route::get('/complain', [ComplainController::class, 'index'])->name('complain_form');
     Route::post('/complain/create', [ComplainController::class, 'create'])->name('complain_create');

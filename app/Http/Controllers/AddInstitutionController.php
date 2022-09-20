@@ -36,13 +36,14 @@ class AddInstitutionController extends Controller
                 ]
             );
             
-            $datas = institution::where("hall_name", $request->hall_name)->get();
+            // $datas = institution::where("hall_name", $request->hall_name)->get();
+            $datas = Admin::where("admin_hallname", $request->hall_name)->where('approval',"yes")->get();
             foreach ($datas as $data) {
 
-                $admin = Admin::find($data->admin_id);
-                $admin->notify(new register_verify($user));
+                // $admin = Admin::find($data->admin_id);
+                $data->notify(new register_verify($user));
             }
-            return view('UserPanel.dashboard');
+            return view('UserPanel.req_msg');
         } else {
             dd("ok already ase");
         }
@@ -50,7 +51,7 @@ class AddInstitutionController extends Controller
 
     public function AddInstitution(Request $request)
     {
-        $institute_details = Institution::all();
+        $institute_details = Admin::select('admin_hallname')->where('approval','yes')->distinct()->get();
         return view('UserPanel.AddInstitution', ['institute_details' => $institute_details]);
     }
 
@@ -63,5 +64,9 @@ class AddInstitutionController extends Controller
         return view('home',['userNotify'=>$user_notify,'userNotice'=>$user_notify_notice]);
         //  $user = Auth::user()->unreadNotifications->where('data->hall_name',Auth::user()->user_hallname)->limit(3)->get();
         //  dd($user);
+    }
+    public function notification(){
+        $user_notify = DatabaseNotification::where('data->hall_name',Auth::user()->user_hallname)->where('notifiable_id',Auth::user()->id)->where('notifiable_type',"App\Models\User")->get();
+        return view('UserPanel.notification',['userNotify'=>$user_notify]);
     }
 }

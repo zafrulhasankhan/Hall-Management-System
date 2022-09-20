@@ -16,7 +16,7 @@
                                 <select name="hall_name" id="parent_id1" class="form-control dynamic" data-dependent="details" required>
                                     <option value="" selected disabled> Select Name</option>
                                     @foreach ( $institute_details as $row )
-                                    <option class="{{ $row->category }}" value="{{ $row->hall_name }}">{{ $row->hall_name }}</option>
+                                    <option class="{{ $row->category }}" value="{{ $row->admin_hallname }}">{{ $row->admin_hallname }}</option>
                                     @endforeach
                                 </select>
                             </div>

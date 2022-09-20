@@ -33,13 +33,16 @@ class HomeController extends Controller
         if (!$reg_info->isEmpty()) {
             return redirect()->route('home');
         }
-
-        $reg_info1 = complain_register::where('user_mail', Auth::user()->email)
-            ->where('approval', '')
-            ->get();
-        if ($reg_info1->isEmpty()) {
+        else{
             return view('UserPanel.req_msg');
         }
+
+        // $reg_info1 = complain_register::where('user_mail', Auth::user()->email)
+        //     ->where('approval', '')
+        //     ->get();
+        // if ($reg_info1->isEmpty()) {
+        //     return view('UserPanel.req_msg');
+        // }
 
         // return view('UserPanel.select_hall',['halls'=> $halls]);
         $reg_info2 = complain_register::where('user_mail', Auth::user()->email);
@@ -47,4 +50,5 @@ class HomeController extends Controller
             return redirect()->route('AddInstuition');
         }
     }
+  
 }

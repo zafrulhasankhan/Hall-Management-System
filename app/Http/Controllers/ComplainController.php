@@ -23,7 +23,9 @@ class ComplainController extends Controller
             ->where('approval', 'yes')
             ->get();
         // dd($complain_registers);
-        return view('UserPanel.complain', ['approve_institutes' => $approve_institutes]);
+        $user_notify = DatabaseNotification::where('data->hall_name',Auth::user()->user_hallname)->where('notifiable_id',Auth::user()->id)->where('notifiable_type',"App\Models\User")->get();
+
+        return view('UserPanel.complain', ['userNotify'=>$user_notify,'approve_institutes' => $approve_institutes]);
     }
 
     public function create(Request $request)

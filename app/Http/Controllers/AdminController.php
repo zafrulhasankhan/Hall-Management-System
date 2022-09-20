@@ -71,7 +71,7 @@ class AdminController extends Controller
 
     public function register_notification_approve($id)
     {
-
+// dd($id);
         $notify_data = DB::update('UPDATE `complain_registers` SET approval =? where id=?', ["yes", $id]);
         $complain_register = complain_register::find($id);
         // dd($complain_register->user_mail);

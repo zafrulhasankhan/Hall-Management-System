@@ -61,6 +61,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('coupon_form') }}">{{ __("Meal's Coupon") }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user.notification') }}">{{ __("Notifications") }}</a>
+                                </li>
                             @endif
                         @endauth
                         <!-- Authentication Links -->
